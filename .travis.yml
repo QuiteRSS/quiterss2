@@ -9,25 +9,25 @@ matrix:
       compiler:
         - gcc
       env:
-        - QT=qt59 && CC=gcc
+        - CC=gcc
     - os: linux
       compiler:
         - clang
       env:
-        - QT=qt59 && CC=clang
+        - CC=clang
         
     - os: osx
       osx_image: xcode8.3
       compiler:
         - gcc
       env:
-        - QT=qt59 && CC=gcc
+        - CC=gcc
     - os: osx
       osx_image: xcode8.3
       compiler:
         - clang
       env:
-        - QT=qt59 && CC=clang
+        - CC=clang
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -51,19 +51,16 @@ install:
 script:
   - QMAKE="qmake"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      CXXFLAGS="-Wextra -Werror";
       QMAKE="/opt/qt59/bin/qmake";
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      CXXFLAGS="-Wextra -Werror -Wno-inconsistent-missing-override -Wno-deprecated-declarations";
       QMAKE=$QTDIR/bin/qmake;
+      MACDEPLOYQT=$QTDIR/bin/macdeployqt;
     fi
   - mkdir build && cd build
-  - $QMAKE QMAKE_CXXFLAGS+="$CXXFLAGS" ..
+  - $QMAKE -r ..
   - make -j3 CC=$CC CXX=$CXX
-  - make install
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      cd release;
-      macdeployqt quiterss2.app/ -dmg;
+      $MACDEPLOYQT release/quiterss2.app -dmg;
     fi
   - ccache --show-stats
