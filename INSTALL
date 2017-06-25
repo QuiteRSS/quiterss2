@@ -10,7 +10,7 @@ Microsoft Windows
 -------------------------------------------------------------------------------
 
 Requires Microsoft Visual C++ Compiler
-Build:
+Build Steps:
   qmake quiterss2.pro -spec win32-msvc
   make -j3
   windeployqt /path/quiterss2.exe
