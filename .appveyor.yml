@@ -1,0 +1,37 @@
+version: build{build}
+image: Visual Studio 2017
+
+cache:
+  - windows/dependencies
+
+build:
+  parallel: true
+  verbosity: detailed
+
+QMAKESPEC: win32-msvc
+MAKETOOL: jom
+TOOLSDIR: C:\Qt\Tools\QtCreator
+
+environment:
+  matrix:
+   - QTDIR: C:\Qt\5.9\msvc2017_64
+     ARCH: x64
+
+configuration:
+  - release
+
+install:
+  - ls "C:\Program Files (x86)\"
+  - ls "C:\Program Files (x86)\Microsoft Visual Studio\"
+  - set CPU=64
+  - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
+  - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
+  - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
+  - call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
+  - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
+
+build_script:
+  - echo "BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
+  - qmake -v
+  - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib quiterss2.pro
+  - call %MAKETOOL%
