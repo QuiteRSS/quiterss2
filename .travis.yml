@@ -60,7 +60,9 @@ script:
   - mkdir build && cd build
   - $QMAKE -r ..
   - make -j3 CC=$CC CXX=$CXX
+  - ls
+  - ls release
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      $MACDEPLOYQT release/quiterss2.app -dmg;
+      $MACDEPLOYQT quiterss2.app -dmg;
     fi
   - ccache --show-stats
