@@ -9,25 +9,25 @@ matrix:
       compiler:
         - gcc
       env:
-        - CC=gcc
+        - OS=linux && CC=gcc
     - os: linux
       compiler:
         - clang
       env:
-        - CC=clang
+        - OS=linux && CC=clang
         
     - os: osx
       osx_image: xcode8.3
       compiler:
         - gcc
       env:
-        - CC=gcc
+        - OS=osx && CC=gcc
     - os: osx
       osx_image: xcode8.3
       compiler:
         - clang
       env:
-        - CC=clang
+        - OS=osx && CC=clang
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -60,8 +60,6 @@ script:
   - mkdir build && cd build
   - $QMAKE -r ..
   - make -j3 CC=$CC CXX=$CXX
-  - ls
-  - ls release
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       $MACDEPLOYQT quiterss2.app -dmg;
     fi
