@@ -29,6 +29,18 @@ install:
 
 build_script:
   - echo "BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
-  - qmake -v
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib quiterss2.pro
   - call %MAKETOOL%
+  - ls
+  
+deploy:
+  release: $(appveyor_build_version)
+  description: 'QuiteRSS released'
+  provider: GitHub
+  auth_token:
+    secure: drq2kUk4Gm8DBK/1OoTajorSWDrBXVVvkM/3SJQRCUiwT54NxPt0Yv5MlBh/n/pF # your encrypted token from GitHub
+  artifact: /quiterss2*\.exe/            # upload all QuiteRSS packages to release assets
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
