@@ -3,19 +3,31 @@ sudo: required
 language: cpp
 cache: ccache
 
-compiler:
- - gcc
- - clang
-
-env:
-- QT=qt59
-
 matrix:
   include:
+    - os: linux
+      compiler:
+        - gcc
+      env:
+        - QT=qt59 && CC=gcc
+    - os: linux
+      compiler:
+        - clang
+      env:
+        - QT=qt59 && CC=clang
+        
     - os: osx
       osx_image: xcode8.3
-      
-    - os: linux
+      compiler:
+        - gcc
+      env:
+        - QT=qt59 && CC=gcc
+    - os: osx
+      osx_image: xcode8.3
+      compiler:
+        - clang
+      env:
+        - QT=qt59 && CC=clang
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
