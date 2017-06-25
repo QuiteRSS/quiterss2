@@ -1,8 +1,9 @@
 version: build{build}
 image: Visual Studio 2017
 
-cache:
-  - windows/dependencies
+branches:
+  only:
+  - master
 
 build:
   parallel: true
@@ -32,9 +33,19 @@ build_script:
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib quiterss2.pro
   - call %MAKETOOL%
   - ls
-  
+
+after_build:
+  - 7z a "QuiteRSS.zip" "\release\*"
+
+artifacts:
+  - path: QuiteRSS.zip
+    name: QuiteRSS-archive
+  - path: release\*.exe
+    name: QuiteRSS Executable
+
 deploy:
   release: $(appveyor_build_version)
+  tag: $(appveyor_repo_tag_name) # don't remove or modify tag field
   description: 'QuiteRSS released'
   provider: GitHub
   auth_token:
@@ -43,4 +54,5 @@ deploy:
   draft: false
   prerelease: false
   on:
-    appveyor_repo_tag: true        # deploy on tag push only
+    branch: master
+    appveyor_repo_tag: false
