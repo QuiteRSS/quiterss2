@@ -50,9 +50,8 @@ deploy:
   provider: GitHub
   auth_token:
     secure: drq2kUk4Gm8DBK/1OoTajorSWDrBXVVvkM/3SJQRCUiwT54NxPt0Yv5MlBh/n/pF # your encrypted token from GitHub
-  artifact: QuiteRSS-executable
+  artifact: QuiteRSS-archive
   draft: false
   prerelease: false
   on:
-    branch: master
-    appveyor_repo_tag: false
+    appveyor_repo_tag: true
