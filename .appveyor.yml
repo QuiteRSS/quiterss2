@@ -35,13 +35,13 @@ build_script:
   - ls
 
 after_build:
-  - 7z a "QuiteRSS.zip" "\release\*"
+  - 7z a "QuiteRSS.zip" "release\*"
 
 artifacts:
   - path: QuiteRSS.zip
     name: QuiteRSS-archive
   - path: release\*.exe
-    name: QuiteRSS Executable
+    name: QuiteRSS-executable
 
 deploy:
   release: $(appveyor_build_version)
@@ -50,7 +50,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: drq2kUk4Gm8DBK/1OoTajorSWDrBXVVvkM/3SJQRCUiwT54NxPt0Yv5MlBh/n/pF # your encrypted token from GitHub
-  artifact: /quiterss2*\.exe/            # upload all QuiteRSS packages to release assets
+  artifact: QuiteRSS-executable
   draft: false
   prerelease: false
   on:
