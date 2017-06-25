@@ -58,7 +58,12 @@ script:
       CXXFLAGS="-Wextra -Werror -Wno-inconsistent-missing-override -Wno-deprecated-declarations";
       QMAKE=$QTDIR/bin/qmake;
     fi
-  - $QMAKE QMAKE_CXXFLAGS+="$CXXFLAGS"
-  - make -j2 CC=$CC CXX=$CXX || exit 1
+  - mkdir build && cd build
+  - $QMAKE QMAKE_CXXFLAGS+="$CXXFLAGS" ..
+  - make -j3 CC=$CC CXX=$CXX
   - make install
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      cd release;
+      macdeployqt quiterss2.app/ -dmg;
+    fi
   - ccache --show-stats
