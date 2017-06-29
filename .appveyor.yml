@@ -48,9 +48,9 @@ deploy:
   username: funcy-dcm
   api_key:
     secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
-  subject: funcy-dcm
+  subject: quiterss
   repo: quiterss2
-  package: quiterss2
+  package: release
   publish: true
   override: true
 #  artifact: QuiteRSS-archive
