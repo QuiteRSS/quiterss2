@@ -49,7 +49,7 @@ deploy:
   api_key:
     secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
   subject: funcy-dcm
-  repo: QuiteRSS/quiterss2
+  repo: quiterss2
   package: quiterss2
   publish: true
   override: true
