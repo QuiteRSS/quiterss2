@@ -50,7 +50,38 @@ deploy:
     secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
   subject: quiterss
   repo: quiterss2
-  package: test
+  package: Windows-installer
   publish: true
   override: true
-#  artifact: QuiteRSS-archive
+  artifact: QuiteRSS-executable
+  on:
+    branch: master
+    appveyor_repo_tag: true
+  
+- provider: BinTray
+  username: funcy-dcm
+  api_key:
+    secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
+  subject: quiterss
+  repo: quiterss2
+  package: Windows-portable
+  publish: true
+  override: true
+  artifact: QuiteRSS-archive
+  on:
+    branch: master
+    appveyor_repo_tag: true
+  
+- provider: BinTray
+  username: funcy-dcm
+  api_key:
+    secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
+  subject: quiterss
+  repo: quiterss2-development
+  package: Windows-portable-development
+  publish: true
+  override: true
+  artifact: QuiteRSS-archive
+  on:
+    branch: master
+    appveyor_repo_tag: false
