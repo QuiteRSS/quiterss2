@@ -44,14 +44,13 @@ artifacts:
     name: QuiteRSS-executable
 
 deploy:
-  release: $(appveyor_build_version)
-  tag: $(appveyor_repo_tag_name) # don't remove or modify tag field
-  description: 'QuiteRSS released'
-  provider: GitHub
-  auth_token:
-    secure: drq2kUk4Gm8DBK/1OoTajorSWDrBXVVvkM/3SJQRCUiwT54NxPt0Yv5MlBh/n/pF # your encrypted token from GitHub
-  artifact: QuiteRSS-archive
-  draft: false
-  prerelease: false
-  on:
-    appveyor_repo_tag: true
+- provider: BinTray
+  username: funcy-dcm
+  api_key:
+    secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
+  subject: funcy-dcm
+  repo: QuiteRSS/quiterss2
+  package: quiterss2
+  publish: true
+  override: true
+#  artifact: QuiteRSS-archive
