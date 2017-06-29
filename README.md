@@ -13,7 +13,7 @@ Links
 * Website: https://quiterss.org
 * Git repository: https://github.com/QuiteRSS/quiterss2
 * Issue tracker: https://github.com/QuiteRSS/quiterss2/issues
-* Translations: https://www.transifex.com/projects/p/quiterss/
+* Translations: https://www.transifex.com/quiterss_team/quiterss2/
 
 License
 -------------------------------------------------------------------------------
