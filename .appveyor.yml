@@ -50,7 +50,7 @@ deploy:
     secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
   subject: quiterss
   repo: quiterss2
-  package: release
+  package: test
   publish: true
   override: true
 #  artifact: QuiteRSS-archive
