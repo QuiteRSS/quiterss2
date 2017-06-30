@@ -1,4 +1,4 @@
-version: 2.0.0
+version: build{build}-{branch}
 image: Visual Studio 2017
 
 build:
@@ -20,9 +20,7 @@ configuration:
 
 install:
   - if "%APPVEYOR_REPO_TAG%" == "true" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%
-  - set VERSION_REV=0
-  - for /f "eol=; tokens=1,2,3,4" %%x in ('git -C ./ rev-list --count master') do (set VERSION_REV=%%x)
-  - if "%APPVEYOR_REPO_TAG%" == "false" set APPVEYOR_BUILD_VERSION=%APPVEYOR_BUILD_VERSION%.%VERSION_REV%
+  - if "%APPVEYOR_REPO_TAG%" == "false" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_COMMIT_TIMESTAMP%-%APPVEYOR_REPO_COMMIT%
   - set OPENSSL_DIR="C:\OpenSSL-Win64"
   - set ICU_DIR_NAME=icu4c-54_1-Win64-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
@@ -36,13 +34,14 @@ build_script:
   - ls
 
 after_build:
-  - 7z a "QuiteRSS.zip" "release\*"
+  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "release\*"
+  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "release\quiterss2.exe"
 
 artifacts:
-  - path: QuiteRSS.zip
-    name: QuiteRSS-archive
-  - path: release\*.exe
-    name: QuiteRSS-executable
+  - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
+    name: QuiteRSS-portable
+  - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip
+    name: QuiteRSS-setup
 
 deploy:
 - provider: BinTray
@@ -55,7 +54,7 @@ deploy:
   version: $(APPVEYOR_BUILD_VERSION)
   publish: true
   override: true
-  artifact: QuiteRSS-executable
+  artifact: QuiteRSS-setup
   on:
     branch: master
     appveyor_repo_tag: true
@@ -70,7 +69,7 @@ deploy:
   version: $(APPVEYOR_BUILD_VERSION)
   publish: true
   override: true
-  artifact: QuiteRSS-archive
+  artifact: QuiteRSS-portable
   on:
     branch: master
     appveyor_repo_tag: true
@@ -85,7 +84,7 @@ deploy:
   version: $(APPVEYOR_BUILD_VERSION)
   publish: true
   override: true
-  artifact: QuiteRSS-archive
+  artifact: QuiteRSS-portable
   on:
     branch: master
     appveyor_repo_tag: false
