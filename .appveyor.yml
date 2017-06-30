@@ -20,7 +20,7 @@ configuration:
 
 install:
   - if "%APPVEYOR_REPO_TAG%" == "true" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%
-  - if "%APPVEYOR_REPO_TAG%" == "false" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_COMMIT_TIMESTAMP%-%APPVEYOR_REPO_COMMIT%
+  - if "%APPVEYOR_REPO_TAG%" == "false" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_COMMIT%
   - set OPENSSL_DIR="C:\OpenSSL-Win64"
   - set ICU_DIR_NAME=icu4c-54_1-Win64-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
@@ -35,6 +35,7 @@ build_script:
 
 after_build:
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "release\*"
+  - ls
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "release\quiterss2.exe"
 
 artifacts:
