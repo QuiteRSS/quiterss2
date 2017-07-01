@@ -77,7 +77,7 @@ script:
 
 deploy:
   - provider: script
-    script: ../tools/build/bintray-macosx-dev-upload.sh
+    script: tools/build/bintray-macosx-dev-upload.sh
     on:
       branch: master
       tags: false
