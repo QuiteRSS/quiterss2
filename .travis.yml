@@ -73,19 +73,19 @@ script:
     fi
   - ccache --show-stats
   
-after_success:
-  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-      sh ../tools/build/bintray-macosx-dev-upload.sh;
-    fi
+#after_success:
+#  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
+#      sh ../tools/build/bintray-macosx-dev-upload.sh;
+#    fi
 
-#deploy:
-#  - provider: script
-#    script: ../tools/build/bintray-macosx-dev-upload.sh
-#    skip_cleanup: true
-#    on:
-#      branch: master
-#      tags: false
-#      condition: $BUILD_ENV = osx_clang
+deploy:
+  - provider: script
+    script: ../tools/build/bintray-macosx-dev-upload.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: false
+      condition: $BUILD_ENV = osx_clang
 #  - provider: script
 #    script: ../tools/build/bintray-macosx-dev-upload.sh
 #    skip_cleanup: true

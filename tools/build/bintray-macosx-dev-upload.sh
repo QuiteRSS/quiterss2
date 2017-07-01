@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -ev
 set -x
 
 user_info="$BINTRAY_USER:$BINTRAY_API_KEY"
