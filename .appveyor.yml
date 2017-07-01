@@ -77,7 +77,7 @@ deploy:
     secure: pHgpq9FPGqcuEERtIZJAEvkEXUzl2OwVmcw4j8z5ndngGXBGRiRXzbBBTSAFef5n
   subject: quiterss
   repo: quiterss2-development
-  package: Windows-portable-development
+  package: Windows-portable-dev
   version: $(APPVEYOR_BUILD_VERSION)
   publish: true
   override: true
