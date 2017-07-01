@@ -75,9 +75,9 @@ script:
   
 after_success:
   - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-      ls;
-      ls ../;
-      ../tools/build/bintray-macosx-dev-upload.sh;
+      cd ../;
+      ls -l;
+      sudo ./tools/build/bintray-macosx-dev-upload.sh;
     fi
 
 #deploy:

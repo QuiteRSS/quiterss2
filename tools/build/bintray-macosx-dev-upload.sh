@@ -1,5 +1,8 @@
 #! /bin/bash
 
+set -e
+set -x
+
 user_info="$BINTRAY_USER:$BINTRAY_API_KEY"
 build_dir="."
 
