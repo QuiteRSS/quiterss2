@@ -5,10 +5,10 @@
 		"subject": "quiterss"
 	},
 	"version": {
-		"name": "build$TRAVIS_BUILD_NUMBER-$TRAVIS_BRANCH"
+		"name": "build${TRAVIS_BUILD_NUMBER}-${TRAVIS_BRANCH}"
 	},
 	"files": [
-		{"matrixParams": {"override": 1}, "includePattern": "(*.dmg)", "uploadPattern": "$1"     }
+		{"matrixParams": {"override": 1}, "includePattern": "./(*.dmg)", "uploadPattern": "$1"     }
 	],
 	"publish": true
 }
