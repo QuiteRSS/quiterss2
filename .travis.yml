@@ -75,7 +75,6 @@ script:
   
 after_success:
   - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-#      chmod +x ../tools/build/bintray-macosx-dev-upload.sh;
       sh ../tools/build/bintray-macosx-dev-upload.sh;
     fi
 
