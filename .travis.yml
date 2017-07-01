@@ -1,5 +1,5 @@
 dist: trusty
-sudo: required
+sudo: false
 language: cpp
 cache: ccache
 
@@ -75,9 +75,9 @@ script:
   
 after_success:
   - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-      cd ../;
+      cd ../tools/build;
       ls -l;
-      sudo ./tools/build/bintray-macosx-dev-upload.sh;
+      ./tools/build/bintray-macosx-dev-upload.sh;
     fi
 
 #deploy:
