@@ -72,21 +72,26 @@ script:
       mv quiterss2.dmg QuiteRSS-${BULD_VER}.dmg;
     fi
   - ccache --show-stats
-  - ls
-  - ls ../
+  
+after_success:
+  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
+      ls
+      ls ../
+      ../tools/build/bintray-macosx-dev-upload.sh
+    fi
 
-deploy:
-  - provider: script
-    script: ./tools/build/bintray-macosx-dev-upload.sh
-    skip_cleanup: true
-    on:
-      branch: master
-      tags: false
-      condition: $BUILD_ENV = osx_clang
-  - provider: script
-    script: ../tools/build/bintray-macosx-dev-upload.sh
-    skip_cleanup: true
-    on:
-      branch: master
-      tags: false
-      condition: $BUILD_ENV = osx_gcc
+#deploy:
+#  - provider: script
+#    script: ./tools/build/bintray-macosx-dev-upload.sh
+#    skip_cleanup: true
+#    on:
+#      branch: master
+#      tags: false
+#      condition: $BUILD_ENV = osx_clang
+#  - provider: script
+#    script: ../tools/build/bintray-macosx-dev-upload.sh
+#    skip_cleanup: true
+#    on:
+#      branch: master
+#      tags: false
+#      condition: $BUILD_ENV = osx_gcc
