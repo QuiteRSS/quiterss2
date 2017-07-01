@@ -1,0 +1,14 @@
+{
+	"package": {
+		"name": "MacOSX-x64-development",
+		"repo": "quiterss2-development",
+		"subject": "quiterss"
+	},
+	"version": {
+		"name": "2.0.0-dev"
+	},
+	"files": [
+		{"matrixParams": {"override": 1}, "includePattern": "(.*\.dmg)", "uploadPattern": "$1"     }
+	],
+	"publish": true
+}

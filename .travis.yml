@@ -64,3 +64,15 @@ script:
       $MACDEPLOYQT quiterss2.app -dmg;
     fi
   - ccache --show-stats
+  - ls
+  - ls ../
+  
+deploy:
+  provider: bintray
+  file: tools/build/bintray-dev.json
+  user: funcy-dcm
+  key:
+    secure: ZABblbN3H4dNNYqB+HTd/qimuqVgHIIvnwTXn+/Z4nq9uvfsIyD1fhq68arXEs8rrW3BVpOVbos2R0DwV7EKPU3kNNNn3DGbRjRnHxKYB+7Vca+C1W+R2qU0set+KEhauzuXRAHb83K8EN6euDiNsUuUQoxrAstjtKzuf+kd0uX1dHV32Fv7o7en0T+BuBPN/SLrKh1HGxiqKHIPFGEHouJw+6yRMCr9zmU7ku+RBhMRyH0LF7utzsyAtMlas3rywsBTa9DMgGBCuwzwHTSJ6FHHjNmmKd+R3xMCMhP06fl5XdRNYdnec/pL0qETTX7UoZidSapVkG3yy3cP0vRYxAp1MkGubEgVgEzpVwB+Y81kWdN4/soMaGb79T9yt7fcBKzrM/XMmJayWAk11mEyb1GLH58t7CZRaH3KSndnuKhKm76o900wFgYZEgL95rUFvvruQJY7RinNwfGeZdevhOHxtdww0+Dq7e8yOnBd4znmIA5+8fCODiAACfVUxxScwD0/SpJ1nGPricdo3xpDouX2ucM7dnpCval5IanNl1yua+dalp4zzbWFnHEqbAQSER47ckR9oRmZ6JbYBsztmEp/cl6RAwtgUanlYqWKJCJJ9cPZCnxTKZEz+An/68yfALGOw8Lf7ZPz381Nn8p800LINkkRNFathgsNiCdvM7E=
+  skip_cleanup: true
+#  on:
+#    tags: true
