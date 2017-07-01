@@ -8,7 +8,7 @@ build_dir="."
 build_ver="build${TRAVIS_BUILD_NUMBER}-${TRAVIS_BRANCH}"
 
 file="$(ls ${build_dir}/*.dmg | head -n 1)"
-upload_url='https://api.bintray.com/content/quiterss/quiterss2-development/MacOSX-x64-dev/${build_ver}/QuiteRSS-${build_ver}.dmg?override=1&publish=1'
+upload_url="https://api.bintray.com/content/quiterss/quiterss2-development/MacOSX-x64-dev/$build_ver/QuiteRSS-$build_ver.dmg?override=1&publish=1"
 
 ls
 echo "$build_ver"
