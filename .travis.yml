@@ -31,9 +31,9 @@ matrix:
 
 before_install:
   - if [ -z "$TRAVIS_TAG" ]; then
-      export BULD_VER=build${TRAVIS_BUILD_NUMBER}-${TRAVIS_BRANCH}
+      export BULD_VER=build${TRAVIS_BUILD_NUMBER}-${TRAVIS_BRANCH};
     else
-      export BULD_VER=${TRAVIS_TAG}
+      export BULD_VER=${TRAVIS_TAG};
     fi
 
 install:
