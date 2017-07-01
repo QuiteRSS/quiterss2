@@ -75,14 +75,13 @@ script:
   
 after_success:
   - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-      chmod +x ../tools/build/bintray-macosx-dev-upload.sh;
-      ls -l ../tools/build;
-      ../tools/build/bintray-macosx-dev-upload.sh;
+#      chmod +x ../tools/build/bintray-macosx-dev-upload.sh;
+      sh ../tools/build/bintray-macosx-dev-upload.sh;
     fi
 
 #deploy:
 #  - provider: script
-#    script: ./tools/build/bintray-macosx-dev-upload.sh
+#    script: ../tools/build/bintray-macosx-dev-upload.sh
 #    skip_cleanup: true
 #    on:
 #      branch: master
