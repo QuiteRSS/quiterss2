@@ -71,6 +71,8 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       $MACDEPLOYQT quiterss2.app -dmg -qmldir=../src;
       mv quiterss2.dmg QuiteRSS-${BULD_VER}.dmg;
+    else
+      mv quiterss2 QuiteRSS-${BULD_VER};
     fi
   - ccache --show-stats
   
@@ -80,5 +82,11 @@ after_success:
         sh ../tools/build/bintray-macosx-dev-upload.sh;
       else
         sh ../tools/build/bintray-macosx-upload.sh;
+      fi
+    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
+      if [ -z "$TRAVIS_TAG" ]; then
+        sh ../tools/build/bintray-linux-dev-upload.sh;
+      else
+        sh ../tools/build/bintray-linux-upload.sh;
       fi
     fi
