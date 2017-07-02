@@ -31,13 +31,11 @@ build_script:
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
   - call %MAKETOOL%
   - windeployqt bin\quiterss2.exe --qmldir=..\resources\qml
-  - ls bin
 
 after_build:
   - cd bin
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss2.exe"
-  - ls bin
 
 artifacts:
   - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
