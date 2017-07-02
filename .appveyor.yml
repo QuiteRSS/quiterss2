@@ -7,7 +7,6 @@ build:
 
 environment:
   global:
-    APP_VERSION: 2.0.0
     ARCH: x64
     QMAKESPEC: win32-msvc
     MAKETOOL: jom
@@ -30,11 +29,14 @@ build_script:
   - echo "BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_NAME%"
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib quiterss2.pro
   - call %MAKETOOL%
-  - ls
+  - windeployqt bin\quiterss2.exe --qmldir=..\resources\qml
+  - ls bin
 
 after_build:
-  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "release\*"
-  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "release\quiterss2.exe"
+  - cd bin
+  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
+  - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss2.exe"
+  - ls bin
 
 artifacts:
   - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
