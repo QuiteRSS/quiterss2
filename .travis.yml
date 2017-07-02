@@ -81,10 +81,4 @@ after_success:
       else
         sh ../tools/build/bintray-macosx-upload.sh;
       fi
-    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-      if [ -z "$TRAVIS_TAG" ]; then
-#        sh ../tools/build/bintray-linux-dev-upload.sh;
-      else
-#        sh ../tools/build/bintray-linux-upload.sh;
-      fi
     fi
