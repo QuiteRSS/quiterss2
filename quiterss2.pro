@@ -15,10 +15,21 @@ SOURCES += \
 
 INCLUDEPATH += \
     $$PWD/src \
-    $$PWD/src/gui \
 
 RESOURCES += \
-    src/gui/qml.qrc
+    resources/qml/qml.qrc
+
+DESTDIR = $$OUT_PWD/bin
+OBJECTS_DIR = $$OUT_PWD/obj
+MOC_DIR = $$OUT_PWD/moc
+RCC_DIR = $$OUT_PWD/rcc
+UI_DIR = $$OUT_PWD/ui
+
+isEmpty(SYSTEMQTSA) {
+  include($$PWD/src/3rdparty/qtsingleapplication/qtsingleapplication.pri)
+} else {
+  CONFIG += qtsingleapplication
+}
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -41,3 +52,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    CHANGELOG \
+    LICENSE \
+    AUTHORS \
+    INSTALL \
+    README.md \
+    .appveyor.yml \
+    .travis.yml

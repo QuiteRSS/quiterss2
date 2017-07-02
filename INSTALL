@@ -1,5 +1,5 @@
 General
-===============================================================================
+================================================================================
 
 QuiteRSS requires Qt version 5.9 or higher
 Required Qt libraries:
@@ -7,12 +7,35 @@ Required Qt libraries:
   QtQuick
 
 Microsoft Windows
--------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------
 Requires Microsoft Visual C++ Compiler
 Build Steps:
-  qmake quiterss2.pro -spec win32-msvc
+  call vcvarsall.bat x64
+  mkdir _build && cd _build
+  qmake CONFIG+=release -spec win32-msvc ..\quiterss2.pro
+  jom -j3
+  windeployqt bin\quiterss2.exe --qmldir=..\resources/qml
+
+Instead of -j3 make option you can use -j<number of your CPU cores + 1>
+
+Linux
+--------------------------------------------------------------------------------
+Build Steps:
+  mkdir _build && cd _build
+  qmake CONFIG+=release PREFIX=/usr ../quiterss2.pro
   make -j3
-  windeployqt /path/quiterss2.exe
+
+Instead of -j3 make option you can use -j<number of your CPU cores + 1>.
+For making debug build use CONFIG+=debug instead of CONFIG+=release.
+By default qmake uses gcc, for using clang you need to alter qmake command:
+  qmake QMAKE_CC=clang QMAKE_CXX=clang++ QMAKE_LINK=clang++ QMAKE_LINK_C=clang CONFIG+=release PREFIX=/usr ../quiterss2.pro
+
+Mac OS X
+--------------------------------------------------------------------------------
+Build Steps:
+  mkdir _build && cd _build
+  qmake -recursive -spec macx-g++ CONFIG+=release CONFIG+=x86_64 ../quiterss2.pro
+  make -j3
+  macdeployqt bin/quiterss2.app/ -dmg -qmldir=../resources/qml
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>
