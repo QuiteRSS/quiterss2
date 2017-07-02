@@ -76,17 +76,17 @@ script:
     fi
   - ccache --show-stats
   
-after_success:
-  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
-      if [ -z "$TRAVIS_TAG" ]; then
-        sh ../tools/build/bintray-macosx-dev-upload.sh;
-      else
-        sh ../tools/build/bintray-macosx-upload.sh;
-      fi
-    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-      if [ -z "$TRAVIS_TAG" ]; then
-        sh ../tools/build/bintray-linux-dev-upload.sh;
-      else
-        sh ../tools/build/bintray-linux-upload.sh;
-      fi
-    fi
+#after_success:
+#  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
+#      if [ -z "$TRAVIS_TAG" ]; then
+#        sh ../tools/build/bintray-macosx-dev-upload.sh;
+#      else
+#        sh ../tools/build/bintray-macosx-upload.sh;
+#      fi
+#    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
+#      if [ -z "$TRAVIS_TAG" ]; then
+#        sh ../tools/build/bintray-linux-dev-upload.sh;
+#      else
+#        sh ../tools/build/bintray-linux-upload.sh;
+#      fi
+#    fi
