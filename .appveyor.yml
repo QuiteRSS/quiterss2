@@ -38,9 +38,9 @@ after_build:
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss2.exe"
 
 artifacts:
-  - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
+  - path: build\bin\QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
     name: QuiteRSS-portable
-  - path: QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip
+  - path: build\bin\QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip
     name: QuiteRSS-setup
 
 deploy:
