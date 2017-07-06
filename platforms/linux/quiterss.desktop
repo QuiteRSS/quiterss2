@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=QuiteRSS
+Exec=quiterss
+Icon=quiterss
+Type=Application
+GenericName=News feed reader
+Comment=QuiteRSS is a open-source cross-platform news feed reader written in Qt/C++/QML
+Terminal=false
+Categories=Qt;Network;News;
+MimeType=application/rss+xml;application/atom+xml;application/rdf+xml;
+X-DBUS-StartupType=none

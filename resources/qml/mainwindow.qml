@@ -6,4 +6,9 @@ Window {
   width: 640
   height: 480
   title: qsTr("QuiteRSS")
+  Text {
+    id: name
+    text: qsTr("text")
+    anchors.centerIn: parent
+  }
 }
