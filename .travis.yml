@@ -69,10 +69,10 @@ script:
   - make -j3 CC=$CC CXX=$CXX
   - cd ./bin
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      $MACDEPLOYQT quiterss2.app -dmg -qmldir=../../resources/qml;
-      mv quiterss2.dmg QuiteRSS-${BULD_VER}.dmg;
+      $MACDEPLOYQT quiterss.app -dmg -qmldir=../../resources/qml;
+      mv quiterss.dmg QuiteRSS-${BULD_VER}.dmg;
     else
-      mv quiterss2 QuiteRSS-${BULD_VER};
+      mv quiterss QuiteRSS-${BULD_VER};
     fi
   - ccache --show-stats
   
