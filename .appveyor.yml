@@ -33,7 +33,7 @@ build_script:
   - windeployqt bin\quiterss.exe --qmldir=..\resources\qml
 
 after_build:
-  - ls c:\Qt\Qt5.9\5.9
+  - ls C:\Qt\5.9
   - ls c:\
   - cd bin
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
