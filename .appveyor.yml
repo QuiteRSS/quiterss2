@@ -31,9 +31,11 @@ build_script:
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
   - call %MAKETOOL%
   - windeployqt bin\quiterss.exe --qmldir=..\resources\qml
-
-after_build:
   - cd bin
+  - cp c:\Windows\SysWOW64\msvcp140.dll .
+  - cp c:\Windows\SysWOW64\vccorlib140.dll .
+  - cp c:\Windows\SysWOW64\vcruntime140.dll .
+  - cp %OPENSSL_DIR%\ssleay32.dll .
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss.exe"
 
