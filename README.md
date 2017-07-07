@@ -15,6 +15,12 @@ Links
 * Issue tracker: https://github.com/QuiteRSS/quiterss2/issues
 * Translations: https://www.transifex.com/quiterss_team/quiterss2/
 
+### Test releases
+
+| Operating System | Link |
+|-------|:----:|
+| Windows 64bit (portable) | [![Download](https://api.bintray.com/packages/quiterss/quiterss2-development/Windows-portable-dev/images/download.svg) ](https://bintray.com/quiterss/quiterss2-development/Windows-portable-dev/_latestVersion) |
+
 License
 -------------------------------------------------------------------------------
 [GNU General Public License v3.0](https://github.com/QuiteRSS/quiterss2/blob/master/LICENSE)
