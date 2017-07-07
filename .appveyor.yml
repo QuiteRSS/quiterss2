@@ -19,6 +19,8 @@ configuration:
 
 install:
   - if "%APPVEYOR_REPO_TAG%" == "true" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%
+  - appveyor DownloadFile https://slproweb.com/download/Win64OpenSSL_Light-1_1_0f.exe
+  - Win64OpenSSL_Light-1_1_0f.exe /silent /verysilent /sp- /suppressmsgboxes
   - set OPENSSL_DIR="C:\OpenSSL-Win64"
   - set ICU_DIR_NAME=icu4c-54_1-Win64-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
