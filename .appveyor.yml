@@ -35,8 +35,7 @@ build_script:
   - cp c:\Windows\SysWOW64\msvcp140.dll .
   - cp c:\Windows\SysWOW64\vccorlib140.dll .
   - cp c:\Windows\SysWOW64\vcruntime140.dll .
-  - ls %OPENSSL_DIR%
-  - ls %OPENSSL_DIR%\bin
+  - ls c:\
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss.exe"
 
