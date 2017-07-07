@@ -1,6 +1,9 @@
 version: build{build}-{branch}
 image: Visual Studio 2017
 
+cache:
+  - C:\OpenSSL-Win64
+
 build:
   parallel: true
   verbosity: detailed
@@ -19,9 +22,12 @@ configuration:
 
 install:
   - if "%APPVEYOR_REPO_TAG%" == "true" set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%
+  - set OPENSSL_DIR="C:\OpenSSL-Win64"
+#  - IF NOT EXIST "%OPENSSL_DIR%\bin" ( appveyor DownloadFile %ICU_DOWNLOAD_URL% ) else ( echo "Use cached %ICU_DIR_NAME%.zip")
   - appveyor DownloadFile https://slproweb.com/download/Win64OpenSSL_Light-1_1_0f.exe
   - Win64OpenSSL_Light-1_1_0f.exe /silent /verysilent /sp- /suppressmsgboxes
-  - set OPENSSL_DIR="C:\OpenSSL-Win64"
+  - ls %OPENSSL_DIR%
+  - ls %OPENSSL_DIR%\bin
   - set ICU_DIR_NAME=icu4c-54_1-Win64-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
@@ -37,7 +43,8 @@ build_script:
   - cp c:\Windows\SysWOW64\msvcp140.dll .
   - cp c:\Windows\SysWOW64\vccorlib140.dll .
   - cp c:\Windows\SysWOW64\vcruntime140.dll .
-  - ls c:\
+  - ls C:\OpenSSL-Win64
+  - ls C:\OpenSSL-Win64\bin
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss.exe"
 
