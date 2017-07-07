@@ -22,12 +22,10 @@ install:
   - set CPU=32
   - IF /I "%ARCH%" == "x64" (set CPU=64)
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
-  - ls %OPENSSL_DIR%
-  - ls %OPENSSL_DIR%
-  - ls C:\Qt
+  - ls C:\Qt\5.9
   - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %ARCH%
   - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
 
 build_script:
