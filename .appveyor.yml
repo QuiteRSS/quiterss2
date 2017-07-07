@@ -8,7 +8,6 @@ build:
 environment:
   global:
     ARCH: x86
-    QMAKESPEC: win32-msvc
     MAKETOOL: jom
     TOOLSDIR: C:\Qt\Tools\QtCreator
   matrix:
@@ -22,14 +21,13 @@ install:
   - set CPU=32
   - IF /I "%ARCH%" == "x64" (set CPU=64)
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
-  - ls C:\Qt\5.9
   - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %ARCH%
   - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
 
 build_script:
-  - echo "BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_NAME%"
+  - echo "BUILD %APPVEYOR_BUILD_VERSION%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_NAME%"
   - mkdir build && cd build
   - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
   - call %MAKETOOL%
@@ -38,6 +36,8 @@ build_script:
   - cp c:\Windows\SysWOW64\msvcp140.dll .
   - cp c:\Windows\SysWOW64\vccorlib140.dll .
   - cp c:\Windows\SysWOW64\vcruntime140.dll .
+  - cp %OPENSSL_DIR%\libeay32.dll .
+  - cp %OPENSSL_DIR%\ssleay32.dll .
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "*"
   - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup.zip" "quiterss.exe"
 
