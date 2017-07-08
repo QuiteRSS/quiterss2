@@ -16,16 +16,12 @@ cp ..\CHANGELOG .\bin
 cp ..\LICENSE .\bin
 cp ..\README.md .\bin
 if "%PORTABLE%" == "true" (
-    echo %PORTABLE%
     mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%
-    cp -r bin QuiteRSS-%APPVEYOR_BUILD_VERSION%
+    cp -r bin\* QuiteRSS-%APPVEYOR_BUILD_VERSION%
     echo > QuiteRSS-%APPVEYOR_BUILD_VERSION%\portable.dat
     7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "QuiteRSS-%APPVEYOR_BUILD_VERSION%"
 ) else (
-    echo %PORTABLE%
     if "%APPVEYOR_REPO_TAG%" == "true" (
         mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%
     )
 )
-ls
-ls ..\
