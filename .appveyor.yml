@@ -21,9 +21,9 @@ configuration:
   - release
 
 install:
-  - if "%APPVEYOR_REPO_TAG%" == "true" (set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%)
+  - IF /I "%APPVEYOR_REPO_TAG%" == "true" (set APPVEYOR_BUILD_VERSION=%APPVEYOR_REPO_TAG_NAME%)
   - set CPU=32
-  - if "%ARCH%" == "x64" (set CPU=64)
+  - IF /I "%ARCH%" == "x64" (set CPU=64)
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
   - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
@@ -45,13 +45,13 @@ build_script:
   - cp ..\CHANGELOG .\bin
   - cp ..\LICENSE .\bin
   - cp ..\README.md .\bin
-  - if "%PORTABLE%" == "true" (
+  - IF /I "%PORTABLE%" == "true" (
       mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%
       cp -r bin QuiteRSS-%APPVEYOR_BUILD_VERSION%
       echo > QuiteRSS-%APPVEYOR_BUILD_VERSION%\portable.dat
       - 7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "QuiteRSS-%APPVEYOR_BUILD_VERSION%"
     ) else (
-      if "%APPVEYOR_REPO_TAG%" == "true" (
+      IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%
       )
     )
