@@ -19,7 +19,7 @@ Links
 
 | Operating System | Link |
 |-------|:----:|
-| Windows 64bit (portable) | [![Download](https://api.bintray.com/packages/quiterss/quiterss2-development/Windows-portable-dev/images/download.svg) ](https://bintray.com/quiterss/quiterss2-development/Windows-portable-dev/_latestVersion) |
+| Windows (portable) | [![Download](https://api.bintray.com/packages/quiterss/quiterss2-development/Windows-portable-dev/images/download.svg) ](https://bintray.com/quiterss/quiterss2-development/Windows-portable-dev/_latestVersion) |
 
 License
 -------------------------------------------------------------------------------

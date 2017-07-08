@@ -20,6 +20,8 @@ if "%PORTABLE%" == "true" (
     cp -r bin/* QuiteRSS-%APPVEYOR_BUILD_VERSION%/
     type nul > QuiteRSS-%APPVEYOR_BUILD_VERSION%\portable.dat
     7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "QuiteRSS-%APPVEYOR_BUILD_VERSION%"
+    for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" ).Hash"') do set hash=%%i
+    echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip > QuiteRSS-%APPVEYOR_BUILD_VERSION%.md5
 ) else (
     if "%APPVEYOR_REPO_TAG%" == "true" (
         mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%
