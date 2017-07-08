@@ -1,3 +1,6 @@
+setlocal
+@echo ON
+
 echo "BUILD %APPVEYOR_BUILD_VERSION%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_NAME%"
 mkdir build && cd build
 qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
@@ -24,3 +27,5 @@ if "%PORTABLE%" == "true" (
         mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%
     )
 )
+ls
+ls ..\
