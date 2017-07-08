@@ -55,6 +55,7 @@ DISTFILES += \
     AUTHORS \
     INSTALL \
     README.md \
+    tools/build/appveyor-build.bat
 
 OTHER_FILES += \
     .appveyor.yml \
