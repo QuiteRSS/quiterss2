@@ -45,7 +45,7 @@ build_script:
   - cp ..\CHANGELOG .\bin
   - cp ..\LICENSE .\bin
   - cp ..\README.md .\bin
-  - cmd: >-
+  - cmd: |
         if "%PORTABLE%" == "true" (
             ls
             mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%
