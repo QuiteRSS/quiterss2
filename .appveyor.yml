@@ -46,7 +46,8 @@ build_script:
   - cp ..\LICENSE .\bin
   - cp ..\README.md .\bin
   - if "%PORTABLE%" == "true" (
-        ls
+        echo "test"
+        echo ls
         mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%
         cp -r bin QuiteRSS-%APPVEYOR_BUILD_VERSION%
         echo > QuiteRSS-%APPVEYOR_BUILD_VERSION%\portable.dat
