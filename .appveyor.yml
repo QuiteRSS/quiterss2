@@ -34,7 +34,7 @@ build_script:
   - call %APPVEYOR_BUILD_FOLDER%\tools\build\appveyor-build.bat
 
 artifacts:
-  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%.*
+  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable.*
     name: QuiteRSS-portable
   - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-x86.*
     name: QuiteRSS-setup

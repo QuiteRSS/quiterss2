@@ -16,12 +16,12 @@ cp ../CHANGELOG bin
 cp ../LICENSE bin
 cp ../README.md bin
 if "%PORTABLE%" == "true" (
-    mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%
-    cp -r bin/* QuiteRSS-%APPVEYOR_BUILD_VERSION%/
-    type nul > QuiteRSS-%APPVEYOR_BUILD_VERSION%\portable.dat
-    7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" "QuiteRSS-%APPVEYOR_BUILD_VERSION%"
-    for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" ).Hash"') do set hash=%%i
-    echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip > QuiteRSS-%APPVEYOR_BUILD_VERSION%.md5
+    mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable
+    cp -r bin/* QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable/
+    type nul > QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable\portable.dat
+    7z a "QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable.zip" "QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable"
+    for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable.zip" ).Hash"') do set hash=%%i
+    echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable.zip > QuiteRSS-%APPVEYOR_BUILD_VERSION%-portable.md5
 ) else (
     if "%APPVEYOR_REPO_TAG%" == "true" (
         call "C:\Program Files (x86)\Inno Setup 5\compil32" /cc "..\tools\installer\quiterss.iss"
