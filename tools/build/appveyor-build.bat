@@ -5,8 +5,7 @@ echo "BUILD %APPVEYOR_BUILD_VERSION%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_N
 mkdir build && cd build
 qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
 call jom
-windeployqt bin\quiterss.exe --qmldir=..\resources\qml
-ls bin
+windeployqt bin\quiterss.exe --qmldir=..\resources\qml --no-translations --no-compiler-runtime
 cp c:\Windows\SysWOW64\msvcp140.dll bin
 cp c:\Windows\SysWOW64\vccorlib140.dll bin
 cp c:\Windows\SysWOW64\vcruntime140.dll bin
@@ -24,7 +23,11 @@ if "%PORTABLE%" == "true" (
     for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" ).Hash"') do set hash=%%i
     echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip > QuiteRSS-%APPVEYOR_BUILD_VERSION%.md5
 ) else (
-    if "%APPVEYOR_REPO_TAG%" == "true" (
-        mkdir QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%
-    )
+#    if "%APPVEYOR_REPO_TAG%" == "true" (
+        call compil32 /cc "..\tools\installer\quiterss.iss"
+        cp QuiteRSS-*-setup.exe QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe
+        for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe" ).Hash"') do set hash=%%i
+        echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe > QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.md5
+        ls .\
+#    )
 )
