@@ -34,10 +34,8 @@ build_script:
   - call %APPVEYOR_BUILD_FOLDER%\tools\build\appveyor-build.bat
 
 artifacts:
-  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip
+  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%.*
     name: QuiteRSS-portable
-  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%.md5
-    name: QuiteRSS-portable-md5
   - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe
     name: QuiteRSS-setup
 
@@ -80,6 +78,6 @@ deploy:
   version: $(APPVEYOR_BUILD_VERSION)
   publish: true
   override: true
-  artifact: QuiteRSS-portable|QuiteRSS-portable-md5
+  artifact: QuiteRSS-portable
   on:
     branch: master
