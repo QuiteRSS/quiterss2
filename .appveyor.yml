@@ -36,7 +36,7 @@ build_script:
 artifacts:
   - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%.*
     name: QuiteRSS-portable
-  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe
+  - path: build\QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.*
     name: QuiteRSS-setup
 
 deploy:

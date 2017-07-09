@@ -23,11 +23,10 @@ if "%PORTABLE%" == "true" (
     for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip" ).Hash"') do set hash=%%i
     echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%.zip > QuiteRSS-%APPVEYOR_BUILD_VERSION%.md5
 ) else (
-#    if "%APPVEYOR_REPO_TAG%" == "true" (
+    if "%APPVEYOR_REPO_TAG%" == "true" (
         call "C:\Program Files (x86)\Inno Setup 5\compil32" /cc "..\tools\installer\quiterss.iss"
         cp QuiteRSS-*-setup.exe QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe
         for /f %%i in ('"powershell (Get-FileHash -Algorithm MD5 -Path "QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe" ).Hash"') do set hash=%%i
         echo %hash% *QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.exe > QuiteRSS-%APPVEYOR_BUILD_VERSION%-setup-%ARCH%.md5
-        ls .\
-#    )
+    )
 )
