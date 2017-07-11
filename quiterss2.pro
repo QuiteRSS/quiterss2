@@ -55,7 +55,7 @@ DISTFILES += \
     AUTHORS \
     INSTALL \
     README.md \
-    tools/build/appveyor-build.bat
+    tools/build/appveyor-build.bat \
 
 OTHER_FILES += \
     .appveyor.yml \
@@ -68,6 +68,7 @@ isEmpty(SYSTEMQTSA) {
 } else {
   CONFIG += qtsingleapplication
 }
+include(translations/translations.pri)
 
 win32 {
   RC_ICONS = resources/icons/quiterss.ico
@@ -78,14 +79,30 @@ win32 {
 }
 
 mac {
-    QMAKE_INFO_PLIST = $$PWD/platforms/macosx/Info.plist
-    ICON = $$PWD/resources/icons/quiterss.icns
+  QMAKE_INFO_PLIST = $$PWD/platforms/macosx/Info.plist
+  ICON = $$PWD/resources/icons/quiterss.icns
+
+  bundle_target.files += AUTHORS
+  bundle_target.files += LICENSE
+  bundle_target.files += CHANGELOG
+  bundle_target.files += README.md
+  bundle_target.files += sound
+  bundle_target.path = Contents/Resources
+  QMAKE_BUNDLE_DATA += bundle_target
+
+  translations.files = $$quote($$DESTDIR/translations)
+  translations.path =  Contents/Resources
+  QMAKE_BUNDLE_DATA += translations
+
+  INSTALLS += bundle_target translations
 }
 
 unix:!mac:!android {
   isEmpty(PREFIX) {
     PREFIX = /usr
   }
+  DATA_DIR = $$PREFIX/share/quiterss
+  DEFINES += RESOURCES_DIR='\\\"$${DATA_DIR}\\\"'
 
   target.path = $$quote($$PREFIX/bin)
 
@@ -108,8 +125,16 @@ unix:!mac:!android {
   icon128.path = $$quote($$PREFIX/share/icons/hicolor/128x128/apps)
   icon256.path = $$quote($$PREFIX/share/icons/hicolor/256x256/apps)
 
+  translations.files = $$quote($$DESTDIR/translations)
+  translations.path =  $$quote($$DATA_DIR)
+  translations.CONFIG += no_check_exist
+
+  sound.files = sound
+  sound.path = $$quote($$DATA_DIR)
+
   INSTALLS += target target1 target2
   INSTALLS += icon16 icon32 icon48 icon64 icon128 icon256
+  INSTALLS += translations sound
 }
 
 android {

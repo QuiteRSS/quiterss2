@@ -5,10 +5,10 @@ Window {
   visible: true
   width: 640
   height: 480
-  title: qsTr("QuiteRSS")
+  title: "QuiteRSS"
   Text {
     id: name
-    text: qsTr("text")
+    text: qsTr("test")
     anchors.centerIn: parent
   }
 }
