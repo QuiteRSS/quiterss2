@@ -11,6 +11,7 @@ Idea: Quite fast and comfortable to user
 Links
 -------------------------------------------------------------------------------
 * Website: https://quiterss.org
+* Forum: https://quiterss.org/en/forums
 * Git repository: https://github.com/QuiteRSS/quiterss2
 * Issue tracker: https://github.com/QuiteRSS/quiterss2/issues
 * Translations: https://www.transifex.com/quiterss_team/quiterss2/
@@ -25,4 +26,4 @@ License
 -------------------------------------------------------------------------------
 [GNU General Public License v3.0](https://github.com/QuiteRSS/quiterss2/blob/master/LICENSE)
 
-Copyright (C) 2017 QuiteRSS Team <quiterssteam@gmail.com>
+Copyright (C) 2011-2017 QuiteRSS Team <quiterssteam@gmail.com>
