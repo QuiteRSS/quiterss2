@@ -24,6 +24,7 @@ Build Steps:
   mkdir build && cd build
   qmake CONFIG+=release PREFIX=/usr ../quiterss2.pro
   make -j3
+  make install
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>.
 For making debug build use CONFIG+=debug instead of CONFIG+=release.

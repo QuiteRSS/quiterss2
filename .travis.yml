@@ -76,7 +76,8 @@ script:
     fi
   - ccache --show-stats
   
-#after_success:
+after_success:
+  - ls /opt/qt59/bin
 #  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
 #      if [ -z "$TRAVIS_TAG" ]; then
 #        sh ../../tools/build/bintray-macosx-dev-upload.sh;
