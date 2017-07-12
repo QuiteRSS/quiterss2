@@ -1,1 +1,1 @@
-tx push --source --translations
+tx push --source

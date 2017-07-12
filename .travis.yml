@@ -77,18 +77,25 @@ script:
   - ccache --show-stats
   
 after_success:
-  - ls /opt/qt59/bin
+  - if [[ "$BUILD_ENV" == "linux_gcc" ]]; then
+      /opt/qt59/bin/lupdate ..\.. -no-obsolete -ts ..\..\translations\quiterss_en.ts
+      pip install virtualenv
+      virtualenv ~/env
+      source ~/env/bin/activate
+      pip install transifex-client
+      sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
+      tx push -s
+    fi
+#      if [ -z "$TRAVIS_TAG" ]; then
+#        sh ../../tools/build/bintray-linux-dev-upload.sh;
+#      else
+#        sh ../../tools/build/bintray-linux-upload.sh;
+#      fi
+#    fi
 #  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
 #      if [ -z "$TRAVIS_TAG" ]; then
 #        sh ../../tools/build/bintray-macosx-dev-upload.sh;
 #      else
 #        sh ../../tools/build/bintray-macosx-upload.sh;
-#      fi
-#    fi
-#    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-#      if [ -z "$TRAVIS_TAG" ]; then
-#        sh ../../tools/build/bintray-linux-dev-upload.sh;
-#      else
-#        sh ../../tools/build/bintray-linux-upload.sh;
 #      fi
 #    fi
