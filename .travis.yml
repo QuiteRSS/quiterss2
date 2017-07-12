@@ -78,7 +78,7 @@ script:
   
 after_success:
   - if [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-      /opt/qt59/bin/lupdate ..\.. -no-obsolete -ts ..\..\translations\quiterss_en.ts
+      /opt/qt59/bin/lupdate ../.. -no-obsolete -ts ../../translations/quiterss_en.ts
       pip install virtualenv
       virtualenv ~/env
       source ~/env/bin/activate
