@@ -2,16 +2,20 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 TRANSLATIONS += \
+    $$PWD/quiterss_bg.ts \
+    $$PWD/quiterss_de.ts \
+    $$PWD/quiterss_fa.ts \
+    $$PWD/quiterss_hu.ts \
+    $$PWD/quiterss_it.ts \
+    $$PWD/quiterss_pt_BR.ts \
     $$PWD/quiterss_ru.ts \
-#    $$PWD/quiterss_de.ts \
+    $$PWD/quiterss_sv.ts \
+    $$PWD/quiterss_tr.ts \
+    $$PWD/quiterss_zh_TW.ts \
 #    $$PWD/quiterss_es.ts \
 #    $$PWD/quiterss_fr.ts \
-#    $$PWD/quiterss_hu.ts \
-#    $$PWD/quiterss_sv.ts \
 #    $$PWD/quiterss_sr.ts \
 #    $$PWD/quiterss_nl.ts \
-#    $$PWD/quiterss_fa.ts \
-#    $$PWD/quiterss_it.ts \
 #    $$PWD/quiterss_zh_CN.ts \
 #    $$PWD/quiterss_uk.ts \
 #    $$PWD/quiterss_cs.ts \
@@ -20,9 +24,7 @@ TRANSLATIONS += \
 #    $$PWD/quiterss_ko.ts \
 #    $$PWD/quiterss_pt_BR.ts \
 #    $$PWD/quiterss_lt.ts \
-#    $$PWD/quiterss_zh_TW.ts \
 #    $$PWD/quiterss_el_GR.ts \
-#    $$PWD/quiterss_tr.ts \
 #    $$PWD/quiterss_ar.ts \
 #    $$PWD/quiterss_sk.ts \
 #    $$PWD/quiterss_tg_TJ.ts \
@@ -31,7 +33,6 @@ TRANSLATIONS += \
 #    $$PWD/quiterss_ro_RO.ts \
 #    $$PWD/quiterss_fi.ts \
 #    $$PWD/quiterss_gl.ts \
-#    $$PWD/quiterss_bg.ts \
 #    $$PWD/quiterss_hi.ts \
 
 isEmpty(QMAKE_LRELEASE) {
