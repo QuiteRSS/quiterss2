@@ -82,11 +82,11 @@ mac {
   QMAKE_INFO_PLIST = $$PWD/platforms/macosx/Info.plist
   ICON = $$PWD/resources/icons/quiterss.icns
 
-  bundle_target.files += AUTHORS
-  bundle_target.files += LICENSE
-  bundle_target.files += CHANGELOG
-  bundle_target.files += README.md
-  bundle_target.files += sound
+  bundle_target.files += $$PWD/AUTHORS
+  bundle_target.files += $$PWD/LICENSE
+  bundle_target.files += $$PWD/CHANGELOG
+  bundle_target.files += $$PWD/README.md
+  bundle_target.files += $$PWD/resources/sound
   bundle_target.path = Contents/Resources
   QMAKE_BUNDLE_DATA += bundle_target
 
@@ -129,7 +129,7 @@ unix:!mac:!android {
   translations.path =  $$quote($$DATA_DIR)
   translations.CONFIG += no_check_exist
 
-  sound.files = sound
+  sound.files = $$PWD/resources/sound
   sound.path = $$quote($$DATA_DIR)
 
   INSTALLS += target target1 target2
