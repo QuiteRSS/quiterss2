@@ -1,7 +1,6 @@
 dist: trusty
 sudo: required
 language: cpp
-cache: ccache
 
 matrix:
   include:
@@ -48,8 +47,6 @@ install:
       echo "Calling brew update...";
       brew update;
       brew outdated openssl || brew upgrade openssl;
-      brew install ccache;
-      PATH="/usr/local/opt/ccache/libexec:$PATH";
       echo "Using Homebrew Qt...";
       brew install qt5;
       export QTDIR=/usr/local/opt/qt5;
@@ -74,38 +71,19 @@ script:
     else
       mv quiterss QuiteRSS-${BULD_VER};
     fi
-  - ccache --show-stats
-  - if [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-      /opt/qt59/bin/lupdate ../.. -no-obsolete -ts ../../translations/quiterss_en.ts
-      ls ./
-      pip install virtualenv
-      virtualenv ~/env
-      source ~/env/bin/activate
-      pip install transifex-client
-      sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
-      tx push -s
-    fi
   
 #after_success:
-#  - if [[ "$BUILD_ENV" == "linux_gcc" ]]; then
-#      /opt/qt59/bin/lupdate ../.. -no-obsolete -ts ../../translations/quiterss_en.ts
-#      pip install virtualenv
-#      virtualenv ~/env
-#      source ~/env/bin/activate
-#      pip install transifex-client
-#      sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
-#      tx push -s
-#    fi
-#      if [ -z "$TRAVIS_TAG" ]; then
-#        sh ../../tools/build/bintray-linux-dev-upload.sh;
-#      else
-#        sh ../../tools/build/bintray-linux-upload.sh;
-#      fi
-#    fi
 #  - if [[ "$BUILD_ENV" == "osx_clang" ]]; then
 #      if [ -z "$TRAVIS_TAG" ]; then
 #        sh ../../tools/build/bintray-macosx-dev-upload.sh;
 #      else
 #        sh ../../tools/build/bintray-macosx-upload.sh;
+#      fi
+#    fi
+#    elif [[ "$BUILD_ENV" == "linux_gcc" ]]; then
+#      if [ -z "$TRAVIS_TAG" ]; then
+#        sh ../../tools/build/bintray-linux-dev-upload.sh;
+#      else
+#        sh ../../tools/build/bintray-linux-upload.sh;
 #      fi
 #    fi
