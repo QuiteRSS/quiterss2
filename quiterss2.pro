@@ -55,10 +55,11 @@ DISTFILES += \
     AUTHORS \
     INSTALL \
     README.md \
-    tools/build/appveyor-build.bat \
+    CONTRIBUTING.md
 
 OTHER_FILES += \
     .appveyor.yml \
+    tools/build/appveyor-build.bat \
     .travis.yml \
     platforms/macosx/Info.plist \
     platforms/linux/quiterss.desktop \
