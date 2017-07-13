@@ -1,4 +1,4 @@
-# Contributing to QuiterSS
+# Contributing to QuiteRSS
 
 All kinds of contributions are very appreciated, be it documentation, code or build system improvements, be it a small patch, a feature or maybe even becoming a co-maintainer of QuiteRSS. Bug reports and feature requests are of course welcome too!
 
