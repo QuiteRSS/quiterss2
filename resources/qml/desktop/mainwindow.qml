@@ -17,31 +17,18 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
+import QtQuick 2.8
+import QtQuick.Window 2.3
+import QtWebEngine 1.0
 
-#include <QApplication>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QTranslator>
+Window {
+  width: 1024
+  height: 750
+  visible: true
+  title: "QuiteRSS"
 
-#include "webengine.h"
-
-int main(int argc, char *argv[])
-{
-  QGuiApplication app(argc, argv);
-
-  QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-  QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
-  QTranslator translator_;
-  translator_.load(QString("translations/quiterss_%1").arg("ru"));
-  app.installTranslator(&translator_);
-
-  WebEngine::initialize();
-
-  QQmlApplicationEngine engine;
-  engine.load(QUrl(QStringLiteral("qrc:/mainwindow.qml")));
-  if (engine.rootObjects().isEmpty())
-    return -1;
-
-  return app.exec();
+  WebEngineView {
+      anchors.fill: parent
+      url: "https://quiterss.org/"
+  }
 }

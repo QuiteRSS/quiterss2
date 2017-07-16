@@ -1,8 +1,8 @@
 lessThan(QT_MAJOR_VERSION, 5) {
-  error("QuiteRSS requires at least Qt 5.9!")
+  error("quiterss: At least Qt "5.9.0" is required!")
 }
 isEqual(QT_MAJOR_VERSION, 5):lessThan(QT_MINOR_VERSION, 9) {
-  error("QuiteRSS requires at least Qt 5.9!")
+  error("quiterss: At least Qt "5.9.0" is required!")
 }
 
 APP_REVISION = 0
@@ -10,7 +10,7 @@ exists(.git) {
   APP_REVISION = $$system(git rev-list --count head)
   !count(APP_REVISION, 1):APP_REVISION = 0
 }
-!build_pass:message(VCS revision: $$APP_REVISION)
+!build_pass:message(quiterss: VCS revision $$APP_REVISION)
 
 TEMPLATE = app
 
@@ -18,6 +18,14 @@ os2|win32|mac|android {
   TARGET = QuiteRSS
 } else {
   TARGET = quiterss
+}
+
+android {
+  MOBILE = true
+  DEFINES += MOBILE
+  !build_pass:message(quiterss: Mobile)
+} else {
+  !build_pass:message(quiterss: Desktop)
 }
 
 QT += qml quick
@@ -32,22 +40,42 @@ VERSION = $${APP_VERSION}.$${APP_REVISION}
 DEFINES += APP_VERSION=\\\"$$APP_VERSION\\\"
 DEFINES += APP_REVISION=\\\"$$APP_REVISION\\\"
 
+isEmpty(DISABLE_BROWSER) {
+  isEmpty(MOBILE) {
+    QT += webengine
+  } else {
+    QT += webview
+  }
+  !build_pass:message(quiterss: Application will be compiled WITH embedded browser)
+} else {
+  DEFINES += DISABLE_BROWSER
+  !build_pass:message(quiterss: Application will be compiled without embedded browser)
+}
+
 DESTDIR = $$OUT_PWD/bin
 OBJECTS_DIR = $$OUT_PWD/obj
 MOC_DIR = $$OUT_PWD/moc
 RCC_DIR = $$OUT_PWD/rcc
 UI_DIR = $$OUT_PWD/ui
 
-HEADERS +=
+HEADERS += \
+    src/webengine/webengine.h
 
 SOURCES += \
     src/main.cpp \
+    src/webengine/webengine.cpp
 
 INCLUDEPATH += \
     $$PWD/src \
+    $$PWD/src/webengine \
 
-RESOURCES += \
-    resources/qml/qml.qrc
+isEmpty(MOBILE) {
+  RESOURCES += \
+      resources/qml/desktop/qml.qrc
+} else {
+  RESOURCES += \
+      resources/qml/mobile/qml.qrc
+}
 
 DISTFILES += \
     CHANGELOG \
@@ -55,7 +83,8 @@ DISTFILES += \
     AUTHORS \
     INSTALL \
     README.md \
-    CONTRIBUTING.md
+    CONTRIBUTING.md \
+    platforms/ios/Info.plist
 
 OTHER_FILES += \
     .appveyor.yml \

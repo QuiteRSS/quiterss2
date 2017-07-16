@@ -5,6 +5,7 @@ QuiteRSS requires Qt version 5.9 or higher
 Required Qt libraries:
   QtQml
   QtQuick
+  QtWebEngine
 
 Microsoft Windows
 --------------------------------------------------------------------------------
@@ -14,7 +15,7 @@ Build Steps:
   mkdir build && cd build
   qmake CONFIG+=release -spec win32-msvc ..\quiterss2.pro
   jom -j3
-  windeployqt bin\quiterss2.exe --qmldir=..\resources\qml
+  windeployqt bin\QuiteRSS.exe --qmldir=..\resources\qml\desktop --no-translations --no-compiler-runtime
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>
 
@@ -37,6 +38,6 @@ Build Steps:
   mkdir build && cd build
   qmake -recursive -spec macx-g++ CONFIG+=release CONFIG+=x86_64 ../quiterss2.pro
   make -j3
-  macdeployqt bin/quiterss2.app/ -dmg -qmldir=../resources/qml
+  macdeployqt bin/QuiteRSS.app/ -dmg -qmldir=../resources/qml/desktop  --no-translations
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>

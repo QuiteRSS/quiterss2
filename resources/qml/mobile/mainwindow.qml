@@ -17,18 +17,23 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-
 import QtQuick 2.8
-import QtQuick.Window 2.2
+import QtQuick.Window 2.3
+import QtWebView 1.1
 
 Window {
+  width: 1024
+  height: 750
   visible: true
-  width: 640
-  height: 480
   title: "QuiteRSS"
-  Text {
-    id: name
-    text: qsTr("test")
-    anchors.centerIn: parent
+
+  WebView {
+      id: webView
+      anchors.fill: parent
+      url: "https://quiterss.org"
+      onLoadingChanged: {
+          if (loadRequest.errorString)
+              console.error(loadRequest.errorString);
+      }
   }
 }

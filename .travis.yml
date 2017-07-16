@@ -66,7 +66,7 @@ script:
   - make -j3 CC=$CC CXX=$CXX
   - cd ./bin
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      $MACDEPLOYQT quiterss.app -dmg -qmldir=../../resources/qml;
+      $MACDEPLOYQT quiterss.app -dmg -qmldir=../../resources/qml/desktop;
       mv quiterss.dmg QuiteRSS-${BULD_VER}.dmg;
     else
       mv quiterss QuiteRSS-${BULD_VER};
