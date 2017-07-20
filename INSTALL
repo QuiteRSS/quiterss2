@@ -7,6 +7,9 @@ Required Qt libraries:
   QtQuick
   QtWebEngine
 
+For building with system qtsingleapplication add SYSTEMQTSA=true to qmake command
+For building without QtWebEngine add DISABLE_BROWSER=true to qmake command
+
 Microsoft Windows
 --------------------------------------------------------------------------------
 Requires Microsoft Visual C++ Compiler
@@ -15,7 +18,8 @@ Build Steps:
   mkdir build && cd build
   qmake CONFIG+=release -spec win32-msvc ..\quiterss2.pro
   jom -j3
-  windeployqt bin\QuiteRSS.exe --qmldir=..\resources\qml\desktop --no-translations --no-compiler-runtime
+  rmdir /s /q  ..\..\resources\qml\+mobile
+  windeployqt bin\QuiteRSS.exe --qmldir=..\resources\qml --no-translations --no-compiler-runtime
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>
 
@@ -38,6 +42,7 @@ Build Steps:
   mkdir build && cd build
   qmake -recursive -spec macx-g++ CONFIG+=release CONFIG+=x86_64 ../quiterss2.pro
   make -j3
-  macdeployqt bin/QuiteRSS.app/ -dmg -qmldir=../resources/qml/desktop  --no-translations
+  rmdir /s /q  ../../resources/qml/+mobile
+  macdeployqt bin/QuiteRSS.app/ -dmg -qmldir=../resources/qml  --no-translations
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>
