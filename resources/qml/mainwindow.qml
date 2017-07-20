@@ -17,42 +17,16 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-#include "webengine.h"
+import QtQuick 2.8
+import QtQuick.Window 2.3
 
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-#include <QtWebView>
-#else
-#include <QtWebEngine>
-#endif
-#endif
+Window {
+    width: 1024
+    height: 750
+    visible: true
+    title: "QuiteRSS"
 
-WebEngine::WebEngine(QObject *parent)
-    : QObject(parent)
-{
-
-}
-
-void WebEngine::initialize()
-{
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-    QtWebView::initialize();
-#else
-    QtWebEngine::initialize();
-#endif
-#endif
-}
-
-QStringList WebEngine::getQmlSelectors()
-{
-    QStringList selectors;
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-    selectors.append("mobile");
-#else
-    selectors.append("webview");
-#endif
-#endif
-    return selectors;
+    WebView {
+        anchors.fill: parent
+    }
 }

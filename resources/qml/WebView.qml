@@ -17,42 +17,13 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-#include "webengine.h"
+import QtQuick 2.8
 
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-#include <QtWebView>
-#else
-#include <QtWebEngine>
-#endif
-#endif
-
-WebEngine::WebEngine(QObject *parent)
-    : QObject(parent)
-{
-
-}
-
-void WebEngine::initialize()
-{
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-    QtWebView::initialize();
-#else
-    QtWebEngine::initialize();
-#endif
-#endif
-}
-
-QStringList WebEngine::getQmlSelectors()
-{
-    QStringList selectors;
-#ifndef DISABLE_BROWSER
-#ifdef MOBILE
-    selectors.append("mobile");
-#else
-    selectors.append("webview");
-#endif
-#endif
-    return selectors;
+Text {
+    id: root
+    baseUrl: "https://quiterss.org"
+    textFormat: Text.RichText
+    renderType: Text.NativeRendering
+    text: "<div class=\"block-content content\"><div style=\"display: inline;\"><a href=\"https://quiterss.org/en/node\" lang=\"en\"><img alt=\"EN\" class=\"language-icon\" src=\"/sites/default/files/languageicons/en.png\" title=\"English\" /></a></div>"
+    onLinkActivated: console.log(link + " link activated")
 }

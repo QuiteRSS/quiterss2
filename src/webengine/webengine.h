@@ -24,12 +24,13 @@
 
 class WebEngine : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit WebEngine(QObject *parent = nullptr);
+    explicit WebEngine(QObject *parent = nullptr);
 
-  static void initialize();
+    static void initialize();
 
+    static QStringList getQmlSelectors();
 };
 
 #endif // WEBENGINE_H

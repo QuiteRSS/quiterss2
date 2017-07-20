@@ -69,13 +69,13 @@ INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/webengine \
 
-isEmpty(MOBILE) {
+#isEmpty(MOBILE) {
+#  RESOURCES += \
+#      resources/qml/desktop/qml.qrc
+#} else {
   RESOURCES += \
-      resources/qml/desktop/qml.qrc
-} else {
-  RESOURCES += \
-      resources/qml/mobile/qml.qrc
-}
+      resources/qml/qml.qrc
+#}
 
 DISTFILES += \
     CHANGELOG \

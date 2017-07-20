@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>mainwindow.qml</file>
+        <file>+mobile/mainwindow.qml</file>
+        <file>WebView.qml</file>
+        <file>+webview/WebView.qml</file>
+    </qresource>
+</RCC>

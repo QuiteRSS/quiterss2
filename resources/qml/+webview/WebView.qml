@@ -18,17 +18,9 @@
 **
 ****************************************************************************/
 import QtQuick 2.8
-import QtQuick.Window 2.3
 import QtWebEngine 1.0
 
-Window {
-  width: 1024
-  height: 750
-  visible: true
-  title: "QuiteRSS"
-
-  WebEngineView {
-      anchors.fill: parent
-      url: "https://quiterss.org/"
-  }
+WebEngineView {
+    id: root
+    url: "https://quiterss.org"
 }

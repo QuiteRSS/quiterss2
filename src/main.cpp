@@ -17,8 +17,9 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-
 #include <QApplication>
+#include <QDebug>
+#include <QQmlFileSelector>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QTranslator>
@@ -27,21 +28,26 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-  QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-  QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-  QTranslator translator_;
-  translator_.load(QString("translations/quiterss_%1").arg("ru"));
-  app.installTranslator(&translator_);
+    QTranslator translator_;
+    translator_.load(QString("translations/quiterss_%1").arg("ru"));
+    app.installTranslator(&translator_);
 
-  WebEngine::initialize();
+    WebEngine::initialize();
 
-  QQmlApplicationEngine engine;
-  engine.load(QUrl(QStringLiteral("qrc:/mainwindow.qml")));
-  if (engine.rootObjects().isEmpty())
-    return -1;
+    QQmlApplicationEngine engine;
 
-  return app.exec();
+    QQmlFileSelector *qfs = new QQmlFileSelector(&engine, &engine);
+    QStringList selectors = WebEngine::getQmlSelectors();
+    qfs->setExtraSelectors(selectors);
+
+    engine.load(QUrl(QStringLiteral("qrc:/mainwindow.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
+
+    return app.exec();
 }
