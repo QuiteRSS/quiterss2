@@ -15,6 +15,7 @@ Microsoft Windows
 Requires Microsoft Visual C++ Compiler
 Build Steps:
   call vcvarsall.bat x64
+  rm -r -f resources\qml\+mobile
   mkdir build && cd build
   qmake CONFIG+=release -spec win32-msvc ..\quiterss2.pro
   jom -j3
@@ -26,6 +27,7 @@ Instead of -j3 make option you can use -j<number of your CPU cores + 1>
 Linux
 --------------------------------------------------------------------------------
 Build Steps:
+  rm -r -f resources\qml\+mobile
   mkdir build && cd build
   qmake CONFIG+=release PREFIX=/usr ../quiterss2.pro
   make -j3
@@ -39,6 +41,7 @@ By default qmake uses gcc, for using clang you need to alter qmake command:
 Mac OS X
 --------------------------------------------------------------------------------
 Build Steps:
+  rm -r -f resources\qml\+mobile
   mkdir build && cd build
   qmake -recursive -spec macx-g++ CONFIG+=release CONFIG+=x86_64 ../quiterss2.pro
   make -j3
