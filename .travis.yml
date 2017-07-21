@@ -61,12 +61,12 @@ script:
       QMAKE=$QTDIR/bin/qmake;
       MACDEPLOYQT=$QTDIR/bin/macdeployqt;
     fi
-  - rm -r -f resources/qml/+mobile
   - mkdir build && cd build
   - $QMAKE -r ..
   - make -j3 CC=$CC CXX=$CXX
   - cd ./bin
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      rm -r -f ../../resources/qml/+mobile;
       $MACDEPLOYQT quiterss.app -dmg -qmldir=../../resources/qml;
       mv quiterss.dmg QuiteRSS-${BULD_VER}.dmg;
     else
