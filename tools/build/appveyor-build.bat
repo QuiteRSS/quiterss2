@@ -10,6 +10,8 @@ windeployqt bin\quiterss.exe --qmldir=..\resources\qml --no-translations --no-co
 cp c:\Windows\SysWOW64\msvcp140.dll bin
 cp c:\Windows\SysWOW64\vccorlib140.dll bin
 cp c:\Windows\SysWOW64\vcruntime140.dll bin
+ls c:\
+ls %OPENSSL_DIR%\
 cp %OPENSSL_DIR%\libeay32.dll bin
 cp %OPENSSL_DIR%\ssleay32.dll bin
 cp ../AUTHORS bin
