@@ -3,17 +3,15 @@ setlocal
 
 echo "BUILD %APPVEYOR_BUILD_VERSION%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_NAME%"
 mkdir build && cd build
-qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib ..\quiterss2.pro
+qmake CONFIG+=%CONFIGURATION% ..\quiterss2.pro
 call jom
 rm -r -f ..\resources\qml\+mobile
 windeployqt bin\quiterss.exe --qmldir=..\resources\qml --no-translations --no-compiler-runtime
 cp c:\Windows\SysWOW64\msvcp140.dll bin
 cp c:\Windows\SysWOW64\vccorlib140.dll bin
 cp c:\Windows\SysWOW64\vcruntime140.dll bin
-ls %OPENSSL_DIR%\
-ls %OPENSSL_DIR%\bin
-cp %OPENSSL_DIR%\libeay32.dll bin
-cp %OPENSSL_DIR%\ssleay32.dll bin
+cp %OPENSSL_DIR%\bin\libeay32.dll bin
+cp %OPENSSL_DIR%\bin\ssleay32.dll bin
 cp ../AUTHORS bin
 cp ../CHANGELOG bin
 cp ../LICENSE bin
