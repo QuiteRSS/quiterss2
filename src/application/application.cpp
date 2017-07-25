@@ -18,10 +18,36 @@
 **
 ****************************************************************************/
 #include "application.h"
+#include "webengine.h"
 
-int main(int argc, char *argv[])
+#include <QDebug>
+#include <QQmlFileSelector>
+#include <QQmlContext>
+#include <QTranslator>
+
+Application::Application(int &argc, char **argv)
+  : QtSingleApplication(argc, argv)
 {
-    Application app(argc, argv);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    return app.exec();
+    QTranslator translator_;
+    translator_.load(QString("translations/quiterss_%1").arg("ru"));
+    installTranslator(&translator_);
+
+    WebEngine::initialize();
+
+    QQmlFileSelector *qfs = new QQmlFileSelector(&engine, &engine);
+    QStringList selectors = WebEngine::getQmlSelectors();
+    qfs->setExtraSelectors(selectors);
+
+    QQmlContext *context = engine.rootContext();
+    context->setContextProperty("app", this);
+
+    engine.load(QUrl(QStringLiteral("qrc:/qml/mainwindow.qml")));
+}
+
+Application::~Application()
+{
+
 }

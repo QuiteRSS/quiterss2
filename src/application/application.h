@@ -17,11 +17,27 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-#include "application.h"
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
-int main(int argc, char *argv[])
+#include <QQmlApplicationEngine>
+
+#include <qtsingleapplication.h>
+
+class Application : public QtSingleApplication
 {
-    Application app(argc, argv);
+    Q_OBJECT
+public:
+    explicit Application(int &argc, char** argv);
+    ~Application();
 
-    return app.exec();
-}
+signals:
+
+public slots:
+
+private:
+    QQmlApplicationEngine engine;
+
+};
+
+#endif // APPLICATION_H

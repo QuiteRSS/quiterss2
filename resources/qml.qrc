@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/mainwindow.qml</file>
+        <file>qml/+mobile/mainwindow.qml</file>
+        <file>qml/WebView.qml</file>
+        <file>qml/+webview/WebView.qml</file>
+        <file>qml/SystemTrayIcon.qml</file>
+    </qresource>
+</RCC>

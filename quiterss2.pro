@@ -28,7 +28,7 @@ android {
   !build_pass:message(quiterss: Desktop)
 }
 
-QT += qml quick
+QT += qml quick widgets
 CONFIG += c++11
 
 APP_VERSION      = 0.0.1
@@ -59,23 +59,22 @@ RCC_DIR = $$OUT_PWD/rcc
 UI_DIR = $$OUT_PWD/ui
 
 HEADERS += \
-    src/webengine/webengine.h
+    src/application/application.h
+    src/webengine/webengine.h \
 
 SOURCES += \
+    src/application/application.cpp \
     src/main.cpp \
-    src/webengine/webengine.cpp
+    src/webengine/webengine.cpp \
 
 INCLUDEPATH += \
     $$PWD/src \
+    $$PWD/src/application \
     $$PWD/src/webengine \
 
-#isEmpty(MOBILE) {
-#  RESOURCES += \
-#      resources/qml/desktop/qml.qrc
-#} else {
-  RESOURCES += \
-      resources/qml/qml.qrc
-#}
+RESOURCES += \
+    resources/qml.qrc \
+    resources/images.qrc
 
 DISTFILES += \
     CHANGELOG \
