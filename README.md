@@ -6,6 +6,8 @@ QuiteRSS2
 
 QuiteRSS is a open-source cross-platform news feed reader written in Qt/C++/QML
 
+This project is a development of the past project [QuiteRSS](https://github.com/QuiteRSS/quiterss)
+
 Idea: Quite fast and comfortable to user
 
 Links
