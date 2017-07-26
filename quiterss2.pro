@@ -62,12 +62,14 @@ HEADERS += \
     src/application/application.h \
     src/systemtray/systemtray.h \
     src/webengine/webengine.h \
+    src/application/logfile.h
 
 SOURCES += \
     src/application/application.cpp \
     src/main.cpp \
     src/webengine/webengine.cpp \
     src/systemtray/systemtray.cpp \
+    src/application/logfile.cpp
 
 INCLUDEPATH += \
     $$PWD/src \

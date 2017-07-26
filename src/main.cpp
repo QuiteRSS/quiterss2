@@ -18,9 +18,12 @@
 **
 ****************************************************************************/
 #include "application.h"
+#include "logfile.h"
 
 int main(int argc, char *argv[])
 {
+    LogFile::initialize();
+
     Application app(argc, argv);
 
     return app.exec();

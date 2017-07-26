@@ -27,9 +27,14 @@
 
 Application::Application(int &argc, char **argv)
     : QtSingleApplication(argc, argv)
+    , m_noDebugOutput(false)
 {
+    qWarning() << "Run application";
+
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    setQuitOnLastWindowClosed(false);
 
     WebEngine::initialize();
     createSystemTray();
@@ -47,9 +52,21 @@ Application::~Application()
 
 }
 
+Application *Application::getInstance()
+{
+  return static_cast<Application*>(QCoreApplication::instance());
+}
+
 void Application::quitApp()
 {
-    qApp->quit();
+    qWarning() << "End application";
+    quit();
+}
+
+void Application::commitData(QSessionManager &manager)
+{
+    manager.release();
+    quitApp();
 }
 
 void Application::createSystemTray()

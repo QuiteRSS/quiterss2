@@ -17,38 +17,24 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-import QtQuick 2.8
-import QtQuick.Controls 1.4
-import QtQuick.Window 2.3
+#ifndef LOGFILE_H
+#define LOGFILE_H
 
-ApplicationWindow {
-    id: mainWindow
-    visible: true
-    width: 1024
-    height: 750
-    title: "QuiteRSS"
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
 
-    WebView {
-        anchors.fill: parent
-    }
+class LogFile
+{
+public:
+    static void initialize();
+    static void msgHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
 
-    Connections {
-        target: systemTray
+private:
+    explicit LogFile();
+    
+};
 
-        onSignalShowWindow: {
-            mainWindow.show()
-            mainWindow.raise()
-            mainWindow.requestActivate()
-        }
-
-        onSignalSingleClick: {
-            mainWindow.show()
-            mainWindow.raise()
-            mainWindow.requestActivate()
-        }
-    }
-
-    onClosing: {
-        mainApp.quitApp()
-    }
-}
+#endif // LOGFILE_H

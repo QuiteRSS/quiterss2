@@ -20,11 +20,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <QDebug>
 #include <QQmlApplicationEngine>
+#include <QSessionManager>
 
 #include <qtsingleapplication.h>
 
-#define mainApp Application::instance()
+#define mainApp Application::getInstance()
 
 class SystemTray;
 
@@ -32,16 +34,27 @@ class Application : public QtSingleApplication
 {
     Q_OBJECT
 public:
-    explicit Application(int &argc, char** argv);
+    explicit Application(int &argc, char **argv);
     ~Application();
+
+    static Application *getInstance();
+
+    QString dataDir() const { return m_dataDir; }
+    bool isNoDebugOutput() const { return m_noDebugOutput; }
 
 signals:
 
 public slots:
     void quitApp();
 
+private slots:
+    void commitData(QSessionManager &manager);
+
 private:
     void createSystemTray();
+
+    QString m_dataDir;
+    bool m_noDebugOutput;
 
     QQmlApplicationEngine m_engine;
     SystemTray *m_systemTray;
