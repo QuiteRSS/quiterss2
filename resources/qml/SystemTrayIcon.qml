@@ -17,35 +17,32 @@
 ** along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **
 ****************************************************************************/
-#ifndef APPLICATION_H
-#define APPLICATION_H
+import Qt.labs.platform 1.0
+import QtQml 2.2
 
-#include <QQmlApplicationEngine>
+SystemTrayIcon {
+    visible: true
+    iconSource: "qrc:/images/tray-icon.png"
+    tooltip: "QuiteRSS"
 
-#include <qtsingleapplication.h>
+    signal signalShowWindow()
+    signal signalSingleClick()
 
-#define mainApp Application::instance()
+    menu: Menu {
+        MenuItem {
+            text: qsTr("Show")
+            onTriggered: signalShowWindow()
+        }
+        MenuItem {
+            text: qsTr("Quit")
+            onTriggered: Qt.quit()
+        }
+    }
 
-class SystemTray;
-
-class Application : public QtSingleApplication
-{
-    Q_OBJECT
-public:
-    explicit Application(int &argc, char** argv);
-    ~Application();
-
-signals:
-
-public slots:
-    void quitApp();
-
-private:
-    void createSystemTray();
-
-    QQmlApplicationEngine m_engine;
-    SystemTray *m_systemTray;
-
-};
-
-#endif // APPLICATION_H
+    onActivated: {
+        console.log(reason)
+        if (reason === SystemTrayIcon.Trigger) {
+            signalSingleClick()
+        }
+    }
+}

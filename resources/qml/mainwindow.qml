@@ -18,15 +18,33 @@
 **
 ****************************************************************************/
 import QtQuick 2.8
+import QtQuick.Controls 1.4
 import QtQuick.Window 2.3
 
-Window {
+ApplicationWindow {
+    id: mainWindow
+    visible: true
     width: 1024
     height: 750
-    visible: true
     title: "QuiteRSS"
 
     WebView {
         anchors.fill: parent
+    }
+
+    Connections {
+        target: systemTray
+
+        onSignalShowWindow: {
+            mainWindow.show()
+            mainWindow.raise()
+            mainWindow.requestActivate()
+        }
+
+        onSignalSingleClick: {
+            mainWindow.show()
+            mainWindow.raise()
+            mainWindow.requestActivate()
+        }
     }
 }

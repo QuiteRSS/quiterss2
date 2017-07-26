@@ -59,18 +59,21 @@ RCC_DIR = $$OUT_PWD/rcc
 UI_DIR = $$OUT_PWD/ui
 
 HEADERS += \
-    src/application/application.h
+    src/application/application.h \
+    src/systemtray/systemtray.h \
     src/webengine/webengine.h \
 
 SOURCES += \
     src/application/application.cpp \
     src/main.cpp \
     src/webengine/webengine.cpp \
+    src/systemtray/systemtray.cpp \
 
 INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/application \
     $$PWD/src/webengine \
+    $$PWD/src/systemtray \
 
 RESOURCES += \
     resources/qml.qrc \
