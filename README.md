@@ -5,6 +5,7 @@ QuiteRSS2
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/16fd63f3bf464c679a27dccc4092ebe8)](https://www.codacy.com/app/Funcy-dcm/quiterss2?utm_source=github.com&utm_medium=referral&utm_content=QuiteRSS/quiterss2&utm_campaign=badger)
 
 QuiteRSS is a open-source cross-platform news feed reader written in Qt/C++/QML
+
 This project is a development of the past project [QuiteRSS](https://github.com/QuiteRSS/quiterss)
 
 Idea: Quite fast and comfortable to user
