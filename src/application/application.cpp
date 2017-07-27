@@ -25,9 +25,9 @@
 #include <QQmlContext>
 #include <QTranslator>
 
-Application::Application(int &argc, char **argv)
-    : QtSingleApplication(argc, argv)
-    , m_noDebugOutput(false)
+Application::Application(int &argc, char **argv) :
+    QtSingleApplication(argc, argv),
+    m_noDebugOutput(false)
 {
     qWarning() << "Run application";
 

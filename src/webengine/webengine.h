@@ -26,7 +26,7 @@ class WebEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit WebEngine(QObject *parent = nullptr);
+    explicit WebEngine(QObject *parent = 0);
 
     static void initialize();
 

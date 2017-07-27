@@ -19,8 +19,7 @@
 ****************************************************************************/
 #include "systemtray.h"
 
-SystemTray::SystemTray(QObject *parent)
-    : QSystemTrayIcon(parent)
+SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 {
     setIcon(QIcon(":/images/tray-icon.png"));
     setToolTip("QuiteRSS");

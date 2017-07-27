@@ -27,8 +27,7 @@
 #endif
 #endif
 
-WebEngine::WebEngine(QObject *parent)
-    : QObject(parent)
+WebEngine::WebEngine(QObject *parent) : QObject(parent)
 {
 
 }
