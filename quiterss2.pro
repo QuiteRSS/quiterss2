@@ -32,6 +32,7 @@ QT += qml quick widgets
 CONFIG += c++11
 
 APP_VERSION      = 0.0.1
+APP_DATE         = 28.07.2017
 APP_DESCRIPTION  = "QuiteRSS - News feed reader"
 APP_COMPANY      = "QuiteRSS Team"
 APP_COPYRIGHT    = "Copyright (C) 2011-2017 $$APP_COMPANY"
@@ -39,6 +40,7 @@ VERSION = $${APP_VERSION}.$${APP_REVISION}
 
 DEFINES += APP_VERSION=\\\"$$APP_VERSION\\\"
 DEFINES += APP_REVISION=\\\"$$APP_REVISION\\\"
+DEFINES += APP_DATE=\\\"$$APP_DATE\\\"
 
 isEmpty(DISABLE_BROWSER) {
   isEmpty(MOBILE) {

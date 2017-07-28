@@ -23,10 +23,14 @@ import QtQuick.Window 2.3
 
 ApplicationWindow {
     id: mainWindow
-    visible: true
-    width: 1024
-    height: 750
+
+    property var splashScreen: SplashScreen {
+        id: splashScreen
+    }
+
     title: "QuiteRSS"
+    height: 750
+    width: 1024
 
     WebView {
         anchors.fill: parent
@@ -45,6 +49,17 @@ ApplicationWindow {
             mainWindow.show()
             mainWindow.raise()
             mainWindow.requestActivate()
+        }
+    }
+    Connections {
+        target: mainApp
+
+        onShowWindow: {
+            mainWindow.visible = true
+            splashScreen.visible = false
+        }
+        onSetSplashScreenValue: {
+            splashScreen.setValue(value)
         }
     }
 

@@ -39,10 +39,16 @@ public:
 
     static Application *getInstance();
 
+    Q_INVOKABLE QString version() const { return APP_VERSION; }
+    Q_INVOKABLE QString reversion() const { return APP_REVISION; }
+    Q_INVOKABLE QString releaseDate() const { return APP_DATE; }
+
     QString dataDir() const { return m_dataDir; }
     bool isNoDebugOutput() const { return m_noDebugOutput; }
 
 signals:
+    void setSplashScreenValue(int value);
+    void showWindow();
 
 public slots:
     void quitApp();

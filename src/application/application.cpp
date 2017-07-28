@@ -24,6 +24,7 @@
 #include <QQmlFileSelector>
 #include <QQmlContext>
 #include <QTranslator>
+#include <QTimer>
 
 Application::Application(int &argc, char **argv) :
     QtSingleApplication(argc, argv),
@@ -45,6 +46,9 @@ Application::Application(int &argc, char **argv) :
 
     m_engine.rootContext()->setContextProperty("mainApp", this);
     m_engine.load(QUrl(QStringLiteral("qrc:/qml/mainwindow.qml")));
+    // Loading slow components
+    emit setSplashScreenValue(7);
+    QTimer::singleShot(2000, this, &Application::showWindow);
 }
 
 Application::~Application()
