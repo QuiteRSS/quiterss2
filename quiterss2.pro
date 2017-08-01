@@ -65,21 +65,24 @@ HEADERS += \
     src/systemtray/systemtray.h \
     src/webengine/webengine.h \
     src/application/logfile.h \
-    src/application/settings.h
+    src/application/settings.h \
+    src/common/common.h
 
 SOURCES += \
     src/application/application.cpp \
+    src/common/common.cpp \
     src/main.cpp \
     src/webengine/webengine.cpp \
     src/systemtray/systemtray.cpp \
     src/application/logfile.cpp \
-    src/application/settings.cpp
+    src/application/settings.cpp \
 
 INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/application \
-    $$PWD/src/webengine \
+    $$PWD/src/common \
     $$PWD/src/systemtray \
+    $$PWD/src/webengine \
 
 RESOURCES += \
     resources/qml.qrc \
@@ -102,10 +105,11 @@ OTHER_FILES += \
     platforms/linux/quiterss.desktop \
 
 isEmpty(SYSTEMQTSA) {
-  include($$PWD/src/3rdparty/qtsingleapplication/qtsingleapplication.pri)
+  include(src/3rdparty/qtsingleapplication/qtsingleapplication.pri)
 } else {
   CONFIG += qtsingleapplication
 }
+include(src/3rdparty/ganalytics/ganalytics.pri)
 include(translations/translations.pri)
 
 win32 {

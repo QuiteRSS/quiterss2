@@ -50,6 +50,7 @@ Application::Application(int &argc, char **argv) :
 
     qWarning() << "Run application";
 
+    createGoogleAnalytics();
     createSystemTray();
     WebEngine::initialize();
 
@@ -76,6 +77,12 @@ Application *Application::getInstance()
 
 void Application::quitApp()
 {
+    if (m_analytics) {
+        m_analytics->endSession();
+        m_analytics->waitForIdle();
+        delete m_analytics;
+    }
+
     qWarning() << "End application";
     quit();
 }
@@ -173,6 +180,23 @@ void Application::createSettings()
     m_langFileName = settings.value("langFileName", lang).toString();
 
     settings.endGroup();
+}
+
+void Application::createGoogleAnalytics()
+{
+    Settings settings;
+    bool statisticsEnabled = settings.value("Main/statisticsEnabled", true).toBool();
+    if (statisticsEnabled) {
+        QString clientID;
+        if (!settings.contains("GAnalytics-cid")) {
+            settings.setValue("GAnalytics-cid", QUuid::createUuid().toString());
+        }
+        clientID = settings.value("GAnalytics-cid").toString();
+        m_analytics = new GAnalytics(this, TRACKING_ID, clientID);
+        m_engine.rootContext()->setContextProperty("analytics", m_analytics);
+        m_analytics->generateUserAgentEtc();
+        m_analytics->startSession();
+    }
 }
 
 void Application::createSystemTray()

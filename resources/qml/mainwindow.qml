@@ -63,6 +63,10 @@ ApplicationWindow {
         }
     }
 
+    Component.onCompleted: {
+        analytics.sendScreenview("mainWindow")
+    }
+
     onClosing: {
         mainApp.quitApp()
     }

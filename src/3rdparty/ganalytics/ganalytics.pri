@@ -1,3 +1,6 @@
 INCLUDEPATH += $$PWD
+DEFINES += GANALYTICS_QTQUICK
+
+SOURCES += $$PWD/ganalytics.cpp
 
 HEADERS += $$PWD/ganalytics.h

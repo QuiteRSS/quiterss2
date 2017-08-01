@@ -23,8 +23,10 @@
 #include <QDebug>
 #include <QQmlApplicationEngine>
 #include <QSessionManager>
-
 #include <qtsingleapplication.h>
+
+#include "common.h"
+#include "ganalytics.h"
 
 #define mainApp Application::getInstance()
 
@@ -48,6 +50,7 @@ public:
     QString resourcesDir() const { return m_resourcesDir; }
     QString dataDir() const { return m_dataDir; }
     bool isNoDebugOutput() const { return m_noDebugOutput; }
+    GAnalytics *analytics() const { return m_analytics; }
 
 signals:
     void setSplashScreenValue(int value);
@@ -63,6 +66,7 @@ private:
     void checkPortable();
     void checkDir();
     void createSettings();
+    void createGoogleAnalytics();
     void createSystemTray();
 
     bool m_isPortable;
@@ -81,6 +85,7 @@ private:
     bool m_showSplashScreen;
     bool m_updateFeedsStartUp;
 
+    GAnalytics *m_analytics;
     QQmlApplicationEngine m_engine;
     SystemTray *m_systemTray;
     QTranslator *m_translator;
