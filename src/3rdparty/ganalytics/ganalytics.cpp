@@ -352,7 +352,11 @@ QString GAnalytics::operatingSystem()
     return str;
 #endif
 #ifdef Q_OS_LINUX
-    return "Linux";
+    QString str = "Linux";
+#ifdef Q_OS_ANDROID
+    str.append("; U; Android " + QSysInfo::productVersion());
+#endif
+    return str;
 #endif
 #ifdef Q_OS_BSD4
     return "BSD 4.4";
@@ -447,7 +451,11 @@ QString GAnalytics::operatingSystem()
 QString GAnalytics::cpuArchitecture()
 {
 #if QT_VERSION >= 0x050400
+#ifdef Q_OS_ANDROID
+    return "";
+#else
     return QSysInfo::currentCpuArchitecture();
+#endif
 #else
     return "";
 #endif
@@ -458,10 +466,10 @@ QString GAnalytics::operatingSystemLong()
     QString os = operatingSystem();
 #if QT_VERSION >= 0x050400
 #ifdef Q_OS_UNIX
-    if (QGuiApplication::platformName() == QL1S("xcb"))
-        os.prepend(QL1S("X11; "));
-    else if (QGuiApplication::platformName().startsWith(QL1S("wayland")))
-        os.prepend(QL1S("Wayland; "));
+    if (QGuiApplication::platformName() == QLatin1String("xcb"))
+        os.prepend(QLatin1String("X11; "));
+    else if (QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
+        os.prepend(QLatin1String("Wayland; "));
 #endif
 #endif
 

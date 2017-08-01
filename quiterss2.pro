@@ -187,6 +187,12 @@ android {
       android/res/drawable/splash.xml
 
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+  isEmpty(PREFIX) {
+    PREFIX = /usr
+  }
+  DATA_DIR = $$PREFIX/share/quiterss
+  DEFINES += RESOURCES_DIR='\\\"$${DATA_DIR}\\\"'
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model

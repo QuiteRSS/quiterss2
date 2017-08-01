@@ -22,18 +22,24 @@ import QtQuick.Window 2.3
 import QtWebView 1.1
 
 Window {
-  width: 1024
-  height: 750
-  visible: true
-  title: "QuiteRSS"
+    id: mainWindow
 
-  WebView {
-      id: webView
-      anchors.fill: parent
-      url: "https://quiterss.org"
-      onLoadingChanged: {
-          if (loadRequest.errorString)
-              console.error(loadRequest.errorString);
-      }
-  }
+    width: 1024
+    height: 750
+    visible: true
+    title: "QuiteRSS"
+
+    WebView {
+        id: webView
+        anchors.fill: parent
+        url: "http://quiterss.org"
+        onLoadingChanged: {
+            if (loadRequest.errorString)
+                console.error(loadRequest.errorString);
+        }
+    }
+
+    Component.onCompleted: {
+        analytics.sendScreenview("mainWindow")
+    }
 }
