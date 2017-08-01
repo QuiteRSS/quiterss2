@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>images/tray-icon.png</file>
         <file>images/splash-screen.png</file>
+        <file>images/quiterss.png</file>
     </qresource>
 </RCC>

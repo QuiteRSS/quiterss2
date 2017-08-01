@@ -28,7 +28,7 @@ android {
   !build_pass:message(quiterss: Desktop)
 }
 
-QT += qml quick widgets
+QT += core qml quick widgets
 CONFIG += c++11
 
 APP_VERSION      = 0.0.1
@@ -64,14 +64,16 @@ HEADERS += \
     src/application/application.h \
     src/systemtray/systemtray.h \
     src/webengine/webengine.h \
-    src/application/logfile.h
+    src/application/logfile.h \
+    src/application/settings.h
 
 SOURCES += \
     src/application/application.cpp \
     src/main.cpp \
     src/webengine/webengine.cpp \
     src/systemtray/systemtray.cpp \
-    src/application/logfile.cpp
+    src/application/logfile.cpp \
+    src/application/settings.cpp
 
 INCLUDEPATH += \
     $$PWD/src \
@@ -90,7 +92,7 @@ DISTFILES += \
     INSTALL \
     README.md \
     CONTRIBUTING.md \
-    platforms/ios/Info.plist
+    platforms/ios/Info.plist \
 
 OTHER_FILES += \
     .appveyor.yml \

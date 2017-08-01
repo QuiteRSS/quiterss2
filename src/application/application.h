@@ -43,6 +43,9 @@ public:
     Q_INVOKABLE QString reversion() const { return APP_REVISION; }
     Q_INVOKABLE QString releaseDate() const { return APP_DATE; }
 
+    bool isPortable() const { return m_isPortable; }
+    bool isPortableAppsCom() const { return m_isPortableAppsCom; }
+    QString resourcesDir() const { return m_resourcesDir; }
     QString dataDir() const { return m_dataDir; }
     bool isNoDebugOutput() const { return m_noDebugOutput; }
 
@@ -57,13 +60,31 @@ private slots:
     void commitData(QSessionManager &manager);
 
 private:
+    void checkPortable();
+    void checkDir();
+    void createSettings();
     void createSystemTray();
 
+    bool m_isPortable;
+    bool m_isPortableAppsCom;
+    bool m_isClosing;
+
+    QString m_resourcesDir;
     QString m_dataDir;
+    QString m_cacheDir;
+    QString m_soundDir;
+
     bool m_noDebugOutput;
+    bool m_storeDBMemory;
+    bool m_dbFileExists;
+    bool m_isSaveDataLastFeed;
+    bool m_showSplashScreen;
+    bool m_updateFeedsStartUp;
 
     QQmlApplicationEngine m_engine;
     SystemTray *m_systemTray;
+    QTranslator *m_translator;
+    QString m_langFileName;
 
 };
 
