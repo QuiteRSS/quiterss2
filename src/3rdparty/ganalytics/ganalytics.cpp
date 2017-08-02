@@ -85,7 +85,7 @@ GAnalytics::~GAnalytics()
 #if GANALYTICS_DEBUG
     // this generally happens after the event-loop is done, so no more network processing
     QList<QNetworkReply *> replies = m_networkManager.findChildren<QNetworkReply *>();
-    for (QList<QNetworkReply *>::iterator it = replies.begin(); it != replies.end(); it++) {
+    for (QList<QNetworkReply *>::iterator it = replies.begin(); it != replies.end(); ++it) {
         if ((*it)->isRunning()) {
             qDebug() << "~GAnalytics, request still running: "
                      << (*it)->url().toString() << ", aborting.";
