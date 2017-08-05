@@ -66,6 +66,7 @@ private:
     void checkPortable();
     void checkDir();
     void createSettings();
+    void initTranslator();
     void createGoogleAnalytics();
     void createSystemTray();
 

@@ -32,7 +32,8 @@
 
 Application::Application(int &argc, char **argv) :
     QtSingleApplication(argc, argv),
-    m_noDebugOutput(false)
+    m_noDebugOutput(false),
+    m_translator(0)
 {
     setApplicationName("QuiteRSS");
     setOrganizationName("QuiteRSS");
@@ -50,6 +51,7 @@ Application::Application(int &argc, char **argv) :
 
     qWarning() << "Run application";
 
+    initTranslator();
     createGoogleAnalytics();
     createSystemTray();
     WebEngine::initialize();
@@ -118,6 +120,8 @@ void Application::checkDir()
 #else
 #if defined(Q_OS_MAC)
     m_resourcesDir = QCoreApplication::applicationDirPath() + "/../Resources";
+#elif defined(Q_OS_ANDROID)
+    m_resourcesDir = ":";
 #else
     m_resourcesDir = RESOURCES_DIR;
 #endif
@@ -154,7 +158,7 @@ void Application::createSettings()
     QString lang;
     QString localLang = QLocale::system().name();
     bool findLang = false;
-    QDir langDir(m_resourcesDir + "/translations");
+    QDir langDir(resourcesDir() + "/translations");
     foreach (QString file, langDir.entryList(QStringList("*.qm"), QDir::Files)) {
         lang = file.section('.', 0, 0).section('_', 1);
         if (localLang == lang) {
@@ -180,6 +184,15 @@ void Application::createSettings()
     m_langFileName = settings.value("langFileName", lang).toString();
 
     settings.endGroup();
+}
+
+void Application::initTranslator()
+{
+  if (!m_translator)
+    m_translator = new QTranslator(this);
+  removeTranslator(m_translator);
+  m_translator->load(resourcesDir() + QString("/translations/quiterss_%1").arg(m_langFileName));
+  installTranslator(m_translator);
 }
 
 void Application::createGoogleAnalytics()
