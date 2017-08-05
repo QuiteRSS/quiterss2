@@ -86,7 +86,7 @@ INCLUDEPATH += \
 
 RESOURCES += \
     resources/qml.qrc \
-    resources/images.qrc
+    resources/images.qrc \
 
 DISTFILES += \
     CHANGELOG \
@@ -188,11 +188,8 @@ android {
 
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-  isEmpty(PREFIX) {
-    PREFIX = /usr
-  }
-  DATA_DIR = $$PREFIX/share/quiterss
-  DEFINES += RESOURCES_DIR='\\\"$${DATA_DIR}\\\"'
+  RESOURCES += \
+      resources/android.qrc
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model

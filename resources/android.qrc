@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sound/notification.wav</file>
+        <file>translations/quiterss_bg.qm</file>
+        <file>translations/quiterss_de.qm</file>
+        <file>translations/quiterss_fa.qm</file>
+        <file>translations/quiterss_hu.qm</file>
+        <file>translations/quiterss_it.qm</file>
+        <file>translations/quiterss_pt_BR.qm</file>
+        <file>translations/quiterss_ru.qm</file>
+        <file>translations/quiterss_sv.qm</file>
+        <file>translations/quiterss_tr.qm</file>
+        <file>translations/quiterss_zh_TW.qm</file>
+    </qresource>
+</RCC>
