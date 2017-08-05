@@ -54,6 +54,10 @@ ApplicationWindow {
     Connections {
         target: mainApp
 
+        onCloseWindow: {
+            close();
+        }
+
         onShowWindow: {
             mainWindow.visible = true
             splashScreen.visible = false

@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 #include "application.h"
-#include "settings.h"
 #include "systemtray.h"
 #include "webengine.h"
 
+#include <QClipboard>
 #include <QDir>
 #include <QFile>
 #include <QQmlFileSelector>
@@ -32,9 +32,28 @@
 
 Application::Application(int &argc, char **argv) :
     QtSingleApplication(argc, argv),
+    m_isClosing(false),
     m_noDebugOutput(false),
     m_translator(0)
 {
+    QString message = arguments().value(1);
+    if (isRunning()) {
+        if (argc == 1) {
+            sendMessage("--show");
+        } else {
+            for (int i = 2; i < argc; ++i)
+                message += '\n' + arguments().value(i);
+            sendMessage(message);
+        }
+        setClosing();
+        return;
+    } else {
+        if (message.contains("--exit", Qt::CaseInsensitive)) {
+            setClosing();
+            return;
+        }
+    }
+
     setApplicationName("QuiteRSS");
     setOrganizationName("QuiteRSS");
     setOrganizationDomain("quiterss.org");
@@ -65,6 +84,10 @@ Application::Application(int &argc, char **argv) :
     // Loading slow components
     emit setSplashScreenValue(7);
     QTimer::singleShot(2000, this, &Application::showWindow);
+
+    receiveMessage(message);
+    connect(this, &Application::messageReceived,
+            this, &Application::receiveMessage);
 }
 
 Application::~Application()
@@ -93,6 +116,35 @@ void Application::commitData(QSessionManager &manager)
 {
     manager.release();
     quitApp();
+}
+
+void Application::receiveMessage(const QString &message)
+{
+    if (!message.isEmpty()) {
+        qWarning() << QString("Received message: %1").arg(message);
+
+        QStringList params = message.split('\n');
+        foreach (QString param, params) {
+            if (param == "--show") {
+                if (isClosing())
+                    return;
+                emit showWindow();
+            }
+            if (param == "--exit")
+                emit closeWindow();
+            if (param.contains("feed:", Qt::CaseInsensitive)) {
+                QClipboard *clipboard = QApplication::clipboard();
+                if (param.contains("https://", Qt::CaseInsensitive)) {
+                    param.remove(0, 5);
+                    clipboard->setText(param);
+                } else {
+                    param.remove(0, 7);
+                    clipboard->setText("http://" + param);
+                }
+                emit addFeed();
+            }
+        }
+    }
 }
 
 void Application::checkPortable()
@@ -180,7 +232,6 @@ void Application::createSettings()
     }
     if (!findLang)
         lang = "en";
-
     m_langFileName = settings.value("langFileName", lang).toString();
 
     settings.endGroup();
@@ -188,11 +239,11 @@ void Application::createSettings()
 
 void Application::initTranslator()
 {
-  if (!m_translator)
-    m_translator = new QTranslator(this);
-  removeTranslator(m_translator);
-  m_translator->load(resourcesDir() + QString("/translations/quiterss_%1").arg(m_langFileName));
-  installTranslator(m_translator);
+    if (!m_translator)
+        m_translator = new QTranslator(this);
+    removeTranslator(m_translator);
+    m_translator->load(resourcesDir() + QString("/translations/quiterss_%1").arg(m_langFileName));
+    installTranslator(m_translator);
 }
 
 void Application::createGoogleAnalytics()

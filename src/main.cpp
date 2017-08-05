@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     LogFile::initialize();
 
     Application app(argc, argv);
+    if (app.isClosing())
+      return 0;
 
     return app.exec();
 }

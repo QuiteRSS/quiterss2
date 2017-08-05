@@ -26,6 +26,7 @@
 #include <qtsingleapplication.h>
 
 #include "common.h"
+#include "settings.h"
 #include "ganalytics.h"
 
 #define mainApp Application::getInstance()
@@ -45,19 +46,25 @@ public:
     Q_INVOKABLE QString reversion() const { return APP_REVISION; }
     Q_INVOKABLE QString releaseDate() const { return APP_DATE; }
 
+    bool isClosing() const { return m_isClosing; }
+    void setClosing() { m_isClosing = true; }
     bool isPortable() const { return m_isPortable; }
     bool isPortableAppsCom() const { return m_isPortableAppsCom; }
     QString resourcesDir() const { return m_resourcesDir; }
     QString dataDir() const { return m_dataDir; }
+    QString cacheDir() const { return m_cacheDir; }
     bool isNoDebugOutput() const { return m_noDebugOutput; }
     GAnalytics *analytics() const { return m_analytics; }
 
 signals:
     void setSplashScreenValue(int value);
     void showWindow();
+    void closeWindow();
+    void addFeed();
 
 public slots:
     void quitApp();
+    void receiveMessage(const QString &message);
 
 private slots:
     void commitData(QSessionManager &manager);
