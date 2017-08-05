@@ -29,8 +29,9 @@ public:
     explicit WebEngine(QObject *parent = 0);
 
     static void initialize();
-
+    static void loadSettings();
     static QStringList getQmlSelectors();
+
 };
 
 #endif // WEBENGINE_H

@@ -24,7 +24,9 @@
 #include <QtWebView>
 #else
 #include <QtWebEngine>
+#include <QQuickWebEngineProfile>
 #endif
+#include "application.h"
 #endif
 
 WebEngine::WebEngine(QObject *parent) : QObject(parent)
@@ -39,7 +41,33 @@ void WebEngine::initialize()
     QtWebView::initialize();
 #else
     QtWebEngine::initialize();
+    loadSettings();
 #endif
+#endif
+}
+
+void WebEngine::loadSettings()
+{
+#ifndef DISABLE_BROWSER
+    Settings settings;
+    settings.beginGroup("Browser");
+    QQuickWebEngineProfile *profile = QQuickWebEngineProfile::defaultProfile();
+    profile->setPersistentCookiesPolicy(QQuickWebEngineProfile::AllowPersistentCookies);
+    profile->setPersistentStoragePath(mainApp->dataDir());
+
+    const QString &cachePath = settings.value("CachePath", mainApp->cacheDir()).toString();
+    profile->setCachePath(cachePath);
+
+    const bool allowCache = settings.value("AllowLocalCache", true).toBool();
+    profile->setHttpCacheType(allowCache ? QQuickWebEngineProfile::DiskHttpCache
+                                         : QQuickWebEngineProfile::MemoryHttpCache);
+
+    const int cacheSize = settings.value("LocalCacheSize", 50).toInt() * 1000 * 1000;
+    profile->setHttpCacheMaximumSize(cacheSize);
+
+    profile->setSpellCheckEnabled(settings.value("SpellCheckEnabled", false).toBool());
+    profile->setSpellCheckLanguages(settings.value("SpellCheckLanguages").toStringList());
+    settings.endGroup();
 #endif
 }
 
