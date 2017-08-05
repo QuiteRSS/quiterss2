@@ -36,13 +36,13 @@ TRANSLATIONS += \
 #    $$PWD/quiterss_hi.ts \
 
 isEmpty(QMAKE_LRELEASE) {
-  Q_OS_WIN:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
-  else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+    Q_OS_WIN:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
+    else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 }
 android {
-  OUTDIR = $$PWD/../resources/translations
+    OUTDIR = $$PWD/../resources/translations
 } else {
-  OUTDIR = $$DESTDIR/translations
+    OUTDIR = $$DESTDIR/translations
 }
 updateqm.input = TRANSLATIONS
 updateqm.output = $$OUTDIR/${QMAKE_FILE_BASE}.qm
