@@ -213,7 +213,7 @@ void Application::initSettings()
 void Application::loadTranslation()
 {
     Settings settings;
-    m_language = settings.value("General-Settings/language", "en"/*getDefaultLanguage()*/).toString();
+    m_language = settings.value("General-Settings/language", getDefaultLanguage()).toString();
 
     if (!m_appTranslator)
         m_appTranslator = new QTranslator(this);
