@@ -50,12 +50,12 @@ void WebEngine::loadSettings()
 {
 #ifndef DISABLE_BROWSER
     Settings settings;
-    settings.beginGroup("Browser");
+    settings.beginGroup("Browser-Settings");
     QQuickWebEngineProfile *profile = QQuickWebEngineProfile::defaultProfile();
     profile->setPersistentCookiesPolicy(QQuickWebEngineProfile::AllowPersistentCookies);
-    profile->setPersistentStoragePath(mainApp->dataDir());
+    profile->setPersistentStoragePath(mainApp->dataDirPath());
 
-    const QString &cachePath = settings.value("CachePath", mainApp->cacheDir()).toString();
+    const QString &cachePath = settings.value("CachePath", mainApp->cacheDirPath()).toString();
     profile->setCachePath(cachePath);
 
     const bool allowCache = settings.value("AllowLocalCache", true).toBool();

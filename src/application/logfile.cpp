@@ -36,16 +36,16 @@ void LogFile::initialize()
 
 void LogFile::msgHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
 {
-    if (!mainApp || mainApp->dataDir().isEmpty())
+    if (!mainApp || mainApp->dataDirPath().isEmpty())
         return;
 
     if (type == QtDebugMsg) {
-        if (mainApp->isNoDebugOutput())
+        if (mainApp->canWriteDebugMsgLog())
             return;
     }
 
     QFile file;
-    file.setFileName(mainApp->dataDir() + "./debug.log");
+    file.setFileName(mainApp->dataDirPath() + "./debug.log");
     QIODevice::OpenMode openMode = QIODevice::WriteOnly | QIODevice::Text;
 
     if (file.exists() && (file.size() < maxLogFileSize))

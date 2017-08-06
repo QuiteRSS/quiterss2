@@ -50,11 +50,12 @@ public:
     void setClosing() { m_isClosing = true; }
     bool isPortable() const { return m_isPortable; }
     bool isPortableAppsCom() const { return m_isPortableAppsCom; }
-    QString resourcesDir() const { return m_resourcesDir; }
-    QString dataDir() const { return m_dataDir; }
-    QString cacheDir() const { return m_cacheDir; }
-    bool isNoDebugOutput() const { return m_noDebugOutput; }
+    QString resourcesDirPath() const { return m_resourcesDir; }
+    QString dataDirPath() const { return m_dataDirPath; }
+    QString cacheDirPath() const { return m_cacheDirPath; }
+    bool canWriteDebugMsgLog() const { return m_writeDebugMsgLog; }
     GAnalytics *analytics() const { return m_analytics; }
+    QString defaultSoundNotifyFile() const;
 
 signals:
     void setSplashScreenValue(int value);
@@ -71,22 +72,22 @@ private slots:
 
 private:
     void checkPortable();
-    void checkDir();
-    void createSettings();
-    void initTranslator();
-    void createGoogleAnalytics();
-    void createSystemTray();
+    void initDirPaths();
+    void initSettings();
+    void loadTranslation();
+    QString getDefaultLanguage();
+    void initGoogleAnalytics();
+    void initSystemTray();
 
     bool m_isPortable;
     bool m_isPortableAppsCom;
     bool m_isClosing;
 
     QString m_resourcesDir;
-    QString m_dataDir;
-    QString m_cacheDir;
-    QString m_soundDir;
+    QString m_dataDirPath;
+    QString m_cacheDirPath;
 
-    bool m_noDebugOutput;
+    bool m_writeDebugMsgLog;
     bool m_storeDBMemory;
     bool m_dbFileExists;
     bool m_isSaveDataLastFeed;
@@ -96,8 +97,9 @@ private:
     GAnalytics *m_analytics;
     QQmlApplicationEngine m_engine;
     SystemTray *m_systemTray;
-    QTranslator *m_translator;
-    QString m_langFileName;
+    QTranslator *m_qtTranslator;
+    QTranslator *m_appTranslator;
+    QString m_language;
 
 };
 

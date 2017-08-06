@@ -38,6 +38,7 @@ Settings::~Settings()
 
 void Settings::createSettings(const QString &fileName)
 {
+    QSettings::setDefaultFormat(QSettings::IniFormat);
     if (!fileName.isEmpty()) {
         m_settings = new QSettings(fileName, QSettings::IniFormat);
     } else {

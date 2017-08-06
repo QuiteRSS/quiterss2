@@ -24,6 +24,7 @@
 #include <QClipboard>
 #include <QDir>
 #include <QFile>
+#include <QLibraryInfo>
 #include <QQmlFileSelector>
 #include <QQmlContext>
 #include <QStandardPaths>
@@ -32,9 +33,13 @@
 
 Application::Application(int &argc, char **argv) :
     QtSingleApplication(argc, argv),
+    m_isPortable(false),
+    m_isPortableAppsCom(false),
     m_isClosing(false),
-    m_noDebugOutput(false),
-    m_translator(0)
+    m_writeDebugMsgLog(false),
+    m_analytics(0),
+    m_qtTranslator(0),
+    m_appTranslator(0)
 {
     QString message = arguments().value(1);
     if (isRunning()) {
@@ -65,14 +70,14 @@ Application::Application(int &argc, char **argv) :
     setAttribute(Qt::AA_EnableHighDpiScaling);
 
     checkPortable();
-    checkDir();
-    createSettings();
+    initDirPaths();
+    initSettings();
 
     qWarning() << "Run application";
 
-    initTranslator();
-    createGoogleAnalytics();
-    createSystemTray();
+    loadTranslation();
+    initGoogleAnalytics();
+    initSystemTray();
     WebEngine::initialize();
 
     QQmlFileSelector *qfs = new QQmlFileSelector(&m_engine, &m_engine);
@@ -165,91 +170,101 @@ void Application::checkPortable()
 #endif
 }
 
-void Application::checkDir()
+void Application::initDirPaths()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_OS2)
     m_resourcesDir = QCoreApplication::applicationDirPath();
 #else
 #if defined(Q_OS_MAC)
-    m_resourcesDir = QCoreApplication::applicationDirPath() + "/../Resources";
+    m_resourcesDirPath = QCoreApplication::applicationDirPath() + "/../Resources";
 #elif defined(Q_OS_ANDROID)
-    m_resourcesDir = ":";
+    m_resourcesDirPath = ":";
 #else
-    m_resourcesDir = RESOURCES_DIR;
+    m_resourcesDirPath = RESOURCES_DIR;
 #endif
 #endif
 
     if (isPortable()) {
-        m_dataDir = QCoreApplication::applicationDirPath() + "/data";
-        m_cacheDir = m_dataDir + "/cache";
-        m_soundDir = m_resourcesDir + "/sound";
+        m_dataDirPath = QCoreApplication::applicationDirPath() + "/data";
+        m_cacheDirPath = m_dataDirPath + "/cache";
     } else {
-        m_dataDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-        m_cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-        m_soundDir = m_resourcesDir + "/sound";
+        m_dataDirPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        m_cacheDirPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     }
-    QDir dir(m_dataDir);
-    dir.mkpath(m_dataDir);
+    QDir dir(m_dataDirPath);
+    dir.mkpath(m_dataDirPath);
 }
 
-void Application::createSettings()
+void Application::initSettings()
 {
     QString fileName;
     if (isPortable())
-        fileName = dataDir() + "/" + QCoreApplication::applicationName() + ".ini";
+        fileName = dataDirPath() + "/" + QCoreApplication::applicationName() + ".ini";
     Settings::createSettings(fileName);
 
     Settings settings;
-    settings.beginGroup("Main");
-    m_storeDBMemory = settings.value("storeDBMemory", true).toBool();
-    m_isSaveDataLastFeed = settings.value("createLastFeed", false).toBool();
-    m_showSplashScreen = settings.value("showSplashScreen", true).toBool();
-    m_updateFeedsStartUp = settings.value("autoUpdatefeedsStartUp", false).toBool();
-    m_noDebugOutput = settings.value("noDebugOutput", true).toBool();
-
-    QString lang;
-    QString localLang = QLocale::system().name();
-    bool findLang = false;
-    QDir langDir(resourcesDir() + "/translations");
-    foreach (QString file, langDir.entryList(QStringList("*.qm"), QDir::Files)) {
-        lang = file.section('.', 0, 0).section('_', 1);
-        if (localLang == lang) {
-            lang = localLang;
-            findLang = true;
-            break;
-        }
-    }
-    if (!findLang) {
-        localLang = localLang.left(2);
-        foreach (QString file, langDir.entryList(QStringList("*.qm"), QDir::Files)) {
-            lang = file.section('.', 0, 0).section('_', 1);
-            if (localLang.contains(lang, Qt::CaseInsensitive)) {
-                lang = localLang;
-                findLang = true;
-                break;
-            }
-        }
-    }
-    if (!findLang)
-        lang = "en";
-    m_langFileName = settings.value("langFileName", lang).toString();
+    settings.beginGroup("General-Settings");
+    m_showSplashScreen = settings.value("ShowSplashScreen", true).toBool();
+    m_writeDebugMsgLog = settings.value("WriteDebugMsgLog", true).toBool();
 
     settings.endGroup();
 }
 
-void Application::initTranslator()
-{
-    if (!m_translator)
-        m_translator = new QTranslator(this);
-    removeTranslator(m_translator);
-    m_translator->load(resourcesDir() + QString("/translations/quiterss_%1").arg(m_langFileName));
-    installTranslator(m_translator);
-}
-
-void Application::createGoogleAnalytics()
+void Application::loadTranslation()
 {
     Settings settings;
-    bool statisticsEnabled = settings.value("Main/statisticsEnabled", true).toBool();
+    m_language = settings.value("General-Settings/language", "en"/*getDefaultLanguage()*/).toString();
+
+    if (!m_appTranslator)
+        m_appTranslator = new QTranslator(this);
+    removeTranslator(m_appTranslator);
+    m_appTranslator->load("quiterss_" + m_language, resourcesDirPath() + "/translations");
+    installTranslator(m_appTranslator);
+
+    if (!m_qtTranslator)
+        m_qtTranslator = new QTranslator(this);
+    removeTranslator(m_qtTranslator);
+    m_qtTranslator->load("qt_" + m_language,
+                         QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    if (m_qtTranslator->isEmpty())
+        m_qtTranslator->load("qt_" + m_language, resourcesDirPath() + "/translations");
+    installTranslator(m_qtTranslator);
+}
+
+QString Application::getDefaultLanguage()
+{
+    QString language;
+    QString localLanguage = QLocale::system().name();
+    bool isFindLanguage = false;
+    QDir translationsDir(resourcesDirPath() + "/translations");
+    foreach (QString file, translationsDir.entryList(QStringList("*.qm"), QDir::Files)) {
+        language = file.section('.', 0, 0).section('_', 1);
+        if (localLanguage == language) {
+            language = localLanguage;
+            isFindLanguage = true;
+            break;
+        }
+    }
+    if (!isFindLanguage) {
+        localLanguage = localLanguage.left(2);
+        foreach (QString file, translationsDir.entryList(QStringList("*.qm"), QDir::Files)) {
+            language = file.section('.', 0, 0).section('_', 1);
+            if (localLanguage.contains(language, Qt::CaseInsensitive)) {
+                language = localLanguage;
+                isFindLanguage = true;
+                break;
+            }
+        }
+    }
+    if (!isFindLanguage)
+        language = "en";
+    return language;
+}
+
+void Application::initGoogleAnalytics()
+{
+    Settings settings;
+    bool statisticsEnabled = settings.value("General-Settings/statisticsEnabled", true).toBool();
     if (statisticsEnabled) {
         QString clientID;
         if (!settings.contains("GAnalytics-cid")) {
@@ -263,7 +278,7 @@ void Application::createGoogleAnalytics()
     }
 }
 
-void Application::createSystemTray()
+void Application::initSystemTray()
 {
     m_systemTray = new SystemTray(this);
     m_systemTray->retranslateStrings();
@@ -272,4 +287,9 @@ void Application::createSystemTray()
             this, &Application::quitApp);
 
     m_systemTray->show();
+}
+
+QString Application::defaultSoundNotifyFile() const
+{
+    return m_resourcesDir + "/sound/notification.wav";
 }
