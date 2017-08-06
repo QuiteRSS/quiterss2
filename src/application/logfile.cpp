@@ -40,7 +40,7 @@ void LogFile::msgHandler(QtMsgType type, const QMessageLogContext &, const QStri
         return;
 
     if (type == QtDebugMsg) {
-        if (mainApp->canWriteDebugMsgLog())
+        if (!mainApp->canWriteDebugMsgLog())
             return;
     }
 

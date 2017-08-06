@@ -26,6 +26,7 @@ ApplicationWindow {
 
     property var splashScreen: SplashScreen {
         id: splashScreen
+        visible: mainApp.showSplashScreenEnabled();
     }
 
     title: "QuiteRSS"

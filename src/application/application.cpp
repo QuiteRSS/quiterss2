@@ -88,7 +88,11 @@ Application::Application(int &argc, char **argv) :
     m_engine.load(QUrl(QStringLiteral("qrc:/qml/mainwindow.qml")));
     // Loading slow components
     emit setSplashScreenValue(7);
-    QTimer::singleShot(2000, this, &Application::showWindow);
+
+    if (showSplashScreenEnabled())
+        QTimer::singleShot(2000, this, &Application::showWindow);
+    else
+        emit showWindow();
 
     receiveMessage(message);
     connect(this, &Application::messageReceived,
@@ -205,7 +209,7 @@ void Application::initSettings()
     Settings settings;
     settings.beginGroup("General-Settings");
     m_showSplashScreen = settings.value("ShowSplashScreen", true).toBool();
-    m_writeDebugMsgLog = settings.value("WriteDebugMsgLog", true).toBool();
+    m_writeDebugMsgLog = settings.value("WriteDebugMsgLog", false).toBool();
 
     settings.endGroup();
 }

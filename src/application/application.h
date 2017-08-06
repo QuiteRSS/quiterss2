@@ -54,6 +54,7 @@ public:
     QString dataDirPath() const { return m_dataDirPath; }
     QString cacheDirPath() const { return m_cacheDirPath; }
     bool canWriteDebugMsgLog() const { return m_writeDebugMsgLog; }
+    Q_INVOKABLE bool showSplashScreenEnabled() const { return m_showSplashScreen; }
     GAnalytics *analytics() const { return m_analytics; }
     QString defaultSoundNotifyFile() const;
 
@@ -88,10 +89,10 @@ private:
     QString m_cacheDirPath;
 
     bool m_writeDebugMsgLog;
+    bool m_showSplashScreen;
     bool m_storeDBMemory;
     bool m_dbFileExists;
     bool m_isSaveDataLastFeed;
-    bool m_showSplashScreen;
     bool m_updateFeedsStartUp;
 
     GAnalytics *m_analytics;
