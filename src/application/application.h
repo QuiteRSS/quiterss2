@@ -50,7 +50,7 @@ public:
     void setClosing() { m_isClosing = true; }
     bool isPortable() const { return m_isPortable; }
     bool isPortableAppsCom() const { return m_isPortableAppsCom; }
-    QString resourcesDirPath() const { return m_resourcesDir; }
+    QString resourcesDirPath() const { return m_resourcesDirPath; }
     QString dataDirPath() const { return m_dataDirPath; }
     QString cacheDirPath() const { return m_cacheDirPath; }
     bool canWriteDebugMsgLog() const { return m_writeDebugMsgLog; }
@@ -83,7 +83,7 @@ private:
     bool m_isPortableAppsCom;
     bool m_isClosing;
 
-    QString m_resourcesDir;
+    QString m_resourcesDirPath;
     QString m_dataDirPath;
     QString m_cacheDirPath;
 

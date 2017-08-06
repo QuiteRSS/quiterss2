@@ -173,7 +173,7 @@ void Application::checkPortable()
 void Application::initDirPaths()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_OS2)
-    m_resourcesDir = QCoreApplication::applicationDirPath();
+    m_resourcesDirPath = QCoreApplication::applicationDirPath();
 #else
 #if defined(Q_OS_MAC)
     m_resourcesDirPath = QCoreApplication::applicationDirPath() + "/../Resources";
@@ -291,5 +291,5 @@ void Application::initSystemTray()
 
 QString Application::defaultSoundNotifyFile() const
 {
-    return m_resourcesDir + "/sound/notification.wav";
+    return m_resourcesDirPath + "/sound/notification.wav";
 }
