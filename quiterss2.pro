@@ -54,6 +54,10 @@ isEmpty(DISABLE_BROWSER) {
     !build_pass:message(quiterss: Application will be compiled without embedded browser)
 }
 
+equals(NO_LOG_FILE, true) {
+    DEFINES += NO_LOG_FILE
+}
+
 DESTDIR = $$OUT_PWD/bin
 OBJECTS_DIR = $$OUT_PWD/obj
 MOC_DIR = $$OUT_PWD/moc
