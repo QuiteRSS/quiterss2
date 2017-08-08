@@ -20,7 +20,6 @@
 #include "logfile.h"
 #include "application.h"
 
-const bool logFileOutput = 1;
 const qint64 maxLogFileSize = 1 * 1024 * 1024; // 1 MB
 
 LogFile::LogFile()
@@ -30,8 +29,9 @@ LogFile::LogFile()
 
 void LogFile::initialize()
 {
-    if (logFileOutput)
-        qInstallMessageHandler(LogFile::msgHandler);
+#ifndef NO_LOG_FILE
+    qInstallMessageHandler(LogFile::msgHandler);
+#endif
 }
 
 void LogFile::msgHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
@@ -45,7 +45,7 @@ void LogFile::msgHandler(QtMsgType type, const QMessageLogContext &, const QStri
     }
 
     QFile file;
-    file.setFileName(mainApp->dataDirPath() + "./debug.log");
+    file.setFileName(mainApp->dataDirPath() + "/debug.log");
     QIODevice::OpenMode openMode = QIODevice::WriteOnly | QIODevice::Text;
 
     if (file.exists() && (file.size() < maxLogFileSize))
