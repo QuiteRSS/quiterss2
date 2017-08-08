@@ -30,14 +30,14 @@ Window {
         progressBar.value = value;
     }
 
-    color: "transparent"
     modality: Qt.ApplicationModal
     flags: Qt.SplashScreen
-
+    color: "transparent"
     x: (Screen.width - splashImage.width) / 2
     y: (Screen.height - splashImage.height) / 2
     width: splashImage.width
     height: splashImage.height
+    visible: mainApp.showSplashScreenEnabled();
 
     Image {
         id: splashImage
@@ -47,6 +47,7 @@ Window {
     ColumnLayout {
         id: layout
         anchors.fill: parent
+
         Text {
             font.pixelSize: 12
             textFormat: Text.RichText
@@ -111,6 +112,4 @@ Window {
             }
         }
     }
-
-    Component.onCompleted: visible = true
 }

@@ -60,8 +60,9 @@ public:
 
 signals:
     void setSplashScreenValue(int value);
-    void showWindow();
-    void closeWindow();
+    void showMainWindow();
+    void closeMainWindow();
+    void showClosingWindow();
     void addFeed();
 
 public slots:
@@ -70,6 +71,7 @@ public slots:
 
 private slots:
     void commitData(QSessionManager &manager);
+    void saveState(QSessionManager &manager);
 
 private:
     void checkPortable();

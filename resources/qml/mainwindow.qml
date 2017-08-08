@@ -26,15 +26,25 @@ ApplicationWindow {
 
     property var splashScreen: SplashScreen {
         id: splashScreen
-        visible: mainApp.showSplashScreenEnabled();
     }
 
     title: "QuiteRSS"
     height: 750
     width: 1024
 
+    ClosingWindow {
+        id: closingWindow
+    }
     WebView {
         anchors.fill: parent
+    }
+
+    Component.onCompleted: {
+        analytics.sendScreenview("mainWindow")
+    }
+
+    onClosing: {
+        mainApp.quitApp()
     }
 
     Connections {
@@ -45,7 +55,6 @@ ApplicationWindow {
             mainWindow.raise()
             mainWindow.requestActivate()
         }
-
         onSignalSingleClick: {
             mainWindow.show()
             mainWindow.raise()
@@ -55,24 +64,20 @@ ApplicationWindow {
     Connections {
         target: mainApp
 
-        onCloseWindow: {
-            close();
-        }
-
-        onShowWindow: {
+        onShowMainWindow: {
             mainWindow.visible = true
             splashScreen.visible = false
+        }
+        onCloseMainWindow: {
+            close()
         }
         onSetSplashScreenValue: {
             splashScreen.setValue(value)
         }
-    }
-
-    Component.onCompleted: {
-        analytics.sendScreenview("mainWindow")
-    }
-
-    onClosing: {
-        mainApp.quitApp()
+        onShowClosingWindow: {
+            closingWindow.show()
+            hide()
+            systemTray.hide()
+        }
     }
 }

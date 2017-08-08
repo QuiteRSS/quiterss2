@@ -90,13 +90,14 @@ Application::Application(int &argc, char **argv) :
     emit setSplashScreenValue(7);
 
     if (showSplashScreenEnabled())
-        QTimer::singleShot(2000, this, &Application::showWindow);
+        QTimer::singleShot(2000, this, &Application::showMainWindow);
     else
-        emit showWindow();
+        emit showMainWindow();
 
     receiveMessage(message);
-    connect(this, &Application::messageReceived,
-            this, &Application::receiveMessage);
+    connect(this, &Application::messageReceived, this, &Application::receiveMessage);
+    connect(this, &Application::commitDataRequest, this, &Application::commitData);
+    connect(this, &Application::saveStateRequest, this, &Application::saveState);
 }
 
 Application::~Application()
@@ -111,6 +112,13 @@ Application *Application::getInstance()
 
 void Application::quitApp()
 {
+    if (isClosing())
+        return;
+
+    setClosing();
+    emit showClosingWindow();
+    processEvents();
+
     if (m_analytics) {
         m_analytics->endSession();
         m_analytics->waitForIdle();
@@ -123,8 +131,17 @@ void Application::quitApp()
 
 void Application::commitData(QSessionManager &manager)
 {
+    qWarning() << "commitData";
+    manager.setRestartHint(QSessionManager::RestartNever);
     manager.release();
     quitApp();
+}
+
+void Application::saveState(QSessionManager &manager)
+{
+    qWarning() << "saveState";
+    manager.setRestartHint(QSessionManager::RestartNever);
+    manager.release();
 }
 
 void Application::receiveMessage(const QString &message)
@@ -137,10 +154,10 @@ void Application::receiveMessage(const QString &message)
             if (param == "--show") {
                 if (isClosing())
                     return;
-                emit showWindow();
+                emit showMainWindow();
             }
             if (param == "--exit")
-                emit closeWindow();
+                emit closeMainWindow();
             if (param.contains("feed:", Qt::CaseInsensitive)) {
                 QClipboard *clipboard = QApplication::clipboard();
                 if (param.contains("https://", Qt::CaseInsensitive)) {

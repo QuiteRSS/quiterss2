@@ -6,5 +6,6 @@
         <file>qml/+webview/WebView.qml</file>
         <file>qml/SystemTrayIcon.qml</file>
         <file>qml/SplashScreen.qml</file>
+        <file>qml/ClosingWindow.qml</file>
     </qresource>
 </RCC>
