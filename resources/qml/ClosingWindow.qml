@@ -28,8 +28,4 @@ Window {
             text: "<b>QuiteRSS</b><br><br>" + qsTr("Saving data...")
         }
     }
-
-    onVisibleChanged: {
-        console.log("closingWindow")
-    }
 }

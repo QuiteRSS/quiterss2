@@ -36,7 +36,7 @@ void LogFile::initialize()
 
 void LogFile::msgHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
 {
-    if (!mainApp || mainApp->dataDirPath().isEmpty())
+    if (!mainApp || mainApp->dataDirPath().isNull())
         return;
 
     if (type == QtDebugMsg) {
