@@ -36,6 +36,7 @@ Application::Application(int &argc, char **argv) :
     m_isPortable(false),
     m_isPortableAppsCom(false),
     m_isClosing(false),
+    m_dirPathInitialized(false),
     m_writeDebugMsgLog(false),
     m_analytics(0),
     m_qtTranslator(0),
@@ -214,6 +215,8 @@ void Application::initDirPaths()
     }
     QDir dir(m_dataDirPath);
     dir.mkpath(m_dataDirPath);
+
+    m_dirPathInitialized = true;
 }
 
 void Application::initSettings()
