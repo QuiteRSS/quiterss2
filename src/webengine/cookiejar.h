@@ -22,13 +22,14 @@
 
 #include <QVector>
 #include <QStringList>
+#include <QNetworkCookie>
 #include <QWebEngineCookieStore>
 
 class CookieJar : public QObject
 {
     Q_OBJECT
 public:
-    explicit CookieJar(QWebEngineCookieStore *cookieStore, QObject* parent = 0);
+    explicit CookieJar(QWebEngineCookieStore *cookieStore, QObject *parent = 0);
 
     void loadSettings();
 
@@ -65,6 +66,7 @@ private:
 
     QWebEngineCookieStore *m_cookieStore;
     QVector<QNetworkCookie> m_cookies;
+
 };
 
 #endif // COOKIEJAR_H

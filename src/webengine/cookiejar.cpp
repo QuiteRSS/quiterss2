@@ -20,13 +20,11 @@
 #include "cookiejar.h"
 #include "application.h"
 
-#include <QNetworkCookie>
-
 #ifndef COOKIE_DEBUG
 #define COOKIE_DEBUG 0
 #endif
 
-CookieJar::CookieJar(QWebEngineCookieStore *cookieStore, QObject* parent) :
+CookieJar::CookieJar(QWebEngineCookieStore *cookieStore, QObject *parent) :
     QObject(parent),
     m_cookieStore(cookieStore)
 {
@@ -112,7 +110,8 @@ void CookieJar::slotCookieRemoved(const QNetworkCookie &cookie)
         emit cookieRemoved(cookie);
 }
 
-bool CookieJar::acceptCookie(const QUrl &firstPartyUrl, const QByteArray &cookieLine, const QUrl &cookieSource) const
+bool CookieJar::acceptCookie(const QUrl &firstPartyUrl, const QByteArray &cookieLine,
+                             const QUrl &cookieSource) const
 {
     const QList<QNetworkCookie> cookies = QNetworkCookie::parseCookies(cookieLine);
     Q_ASSERT(cookies.size() == 1);
@@ -121,10 +120,9 @@ bool CookieJar::acceptCookie(const QUrl &firstPartyUrl, const QByteArray &cookie
     return !rejectCookie(firstPartyUrl.host(), cookie, cookieSource.host());
 }
 
-bool CookieJar::rejectCookie(const QString &domain, const QNetworkCookie &cookie, const QString &cookieDomain) const
+bool CookieJar::rejectCookie(const QString &domain, const QNetworkCookie &cookie,
+                             const QString &cookieDomain) const
 {
-    Q_UNUSED(domain)
-
     if (!m_allowCookies) {
         bool result = listMatchesDomain(m_whitelist, cookieDomain);
         if (!result) {
