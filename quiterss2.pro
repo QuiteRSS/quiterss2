@@ -67,26 +67,39 @@ UI_DIR = $$OUT_PWD/ui
 HEADERS += \
     src/application/application.h \
     src/systemtray/systemtray.h \
-    src/webengine/webengine.h \
     src/application/logfile.h \
     src/application/settings.h \
-    src/common/common.h
+    src/common/common.h \
+    src/network/networkmanager.h \
 
 SOURCES += \
     src/application/application.cpp \
     src/common/common.cpp \
     src/main.cpp \
-    src/webengine/webengine.cpp \
     src/systemtray/systemtray.cpp \
     src/application/logfile.cpp \
     src/application/settings.cpp \
+    src/network/networkmanager.cpp \
 
 INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/application \
     $$PWD/src/common \
     $$PWD/src/systemtray \
-    $$PWD/src/webengine \
+    $$PWD/src/network \
+
+isEmpty(DISABLE_BROWSER) {
+    HEADERS += \
+        src/webengine/webengine.h \
+        src/webengine/cookiejar.h \
+
+    SOURCES += \
+        src/webengine/webengine.cpp \
+        src/webengine/cookiejar.cpp \
+
+    INCLUDEPATH += \
+        $$PWD/src/webengine \
+}
 
 RESOURCES += \
     resources/qml.qrc \

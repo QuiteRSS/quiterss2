@@ -19,67 +19,61 @@
 ****************************************************************************/
 #include "webengine.h"
 
-#ifndef DISABLE_BROWSER
 #ifdef MOBILE
 #include <QtWebView>
 #else
 #include <QtWebEngine>
-#include <QQuickWebEngineProfile>
 #endif
 #include "application.h"
-#endif
 
 WebEngine::WebEngine(QObject *parent) : QObject(parent)
 {
-
-}
-
-void WebEngine::initialize()
-{
-#ifndef DISABLE_BROWSER
 #ifdef MOBILE
     QtWebView::initialize();
 #else
     QtWebEngine::initialize();
+    m_profile = QQuickWebEngineProfile::defaultProfile();
+    m_cookieJar = new CookieJar(m_profile->cookieStore(), this);
+#endif
     loadSettings();
-#endif
-#endif
+}
+
+WebEngine::~WebEngine()
+{
+
 }
 
 void WebEngine::loadSettings()
 {
-#ifndef DISABLE_BROWSER
     Settings settings;
     settings.beginGroup("Browser-Settings");
-    QQuickWebEngineProfile *profile = QQuickWebEngineProfile::defaultProfile();
-    profile->setPersistentCookiesPolicy(QQuickWebEngineProfile::AllowPersistentCookies);
-    profile->setPersistentStoragePath(mainApp->dataDirPath());
+#ifndef MOBILE
+    m_profile->setPersistentCookiesPolicy(QQuickWebEngineProfile::AllowPersistentCookies);
+    m_profile->setPersistentStoragePath(mainApp->dataDirPath());
 
     const QString &cachePath = settings.value("CachePath", mainApp->cacheDirPath()).toString();
-    profile->setCachePath(cachePath);
+    m_profile->setCachePath(cachePath);
 
     const bool allowCache = settings.value("AllowLocalCache", true).toBool();
-    profile->setHttpCacheType(allowCache ? QQuickWebEngineProfile::DiskHttpCache
+    m_profile->setHttpCacheType(allowCache ? QQuickWebEngineProfile::DiskHttpCache
                                          : QQuickWebEngineProfile::MemoryHttpCache);
 
     const int cacheSize = settings.value("LocalCacheSize", 50).toInt() * 1000 * 1000;
-    profile->setHttpCacheMaximumSize(cacheSize);
+    m_profile->setHttpCacheMaximumSize(cacheSize);
 
-    profile->setSpellCheckEnabled(settings.value("SpellCheckEnabled", false).toBool());
-    profile->setSpellCheckLanguages(settings.value("SpellCheckLanguages").toStringList());
-    settings.endGroup();
+    m_profile->setSpellCheckEnabled(settings.value("SpellCheckEnabled", false).toBool());
+    m_profile->setSpellCheckLanguages(settings.value("SpellCheckLanguages").toStringList());
 #endif
+    settings.endGroup();
 }
 
 QStringList WebEngine::getQmlSelectors()
 {
     QStringList selectors;
-#ifndef DISABLE_BROWSER
 #ifdef MOBILE
     selectors.append("mobile");
 #else
     selectors.append("webview");
-#endif
 #endif
     return selectors;
 }

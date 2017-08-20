@@ -20,8 +20,13 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <QString>
+
 #define TRACKING_ID "UA-103784998-1"
 
-
+namespace Common
+{
+    bool matchDomain(const QString &pattern, const QString &domain);
+}
 
 #endif // COMMON_H

@@ -19,7 +19,6 @@
 ****************************************************************************/
 #include "application.h"
 #include "systemtray.h"
-#include "webengine.h"
 
 #include <QClipboard>
 #include <QDir>
@@ -76,17 +75,16 @@ Application::Application(int &argc, char **argv) :
 
     qWarning() << "Run application";
 
+    m_networkManager = new NetworkManager(this);
+
     loadTranslation();
     initGoogleAnalytics();
     initSystemTray();
-    WebEngine::initialize();
+    initWebEngine();
+    initQmlFileSelector();
 
-    QQmlFileSelector *qfs = new QQmlFileSelector(&m_engine, &m_engine);
-    QStringList selectors = WebEngine::getQmlSelectors();
-    qfs->setExtraSelectors(selectors);
-
-    m_engine.rootContext()->setContextProperty("mainApp", this);
-    m_engine.load(QUrl(QStringLiteral("qrc:/qml/mainwindow.qml")));
+    m_qmlEngine.rootContext()->setContextProperty("mainApp", this);
+    m_qmlEngine.load(QUrl(QStringLiteral("qrc:/qml/mainwindow.qml")));
     // Loading slow components
     emit setSplashScreenValue(7);
 
@@ -296,7 +294,7 @@ void Application::initGoogleAnalytics()
         }
         clientID = settings.value("GAnalytics-cid").toString();
         m_analytics = new GAnalytics(this, TRACKING_ID, clientID);
-        m_engine.rootContext()->setContextProperty("analytics", m_analytics);
+        m_qmlEngine.rootContext()->setContextProperty("analytics", m_analytics);
         m_analytics->generateUserAgentEtc();
         m_analytics->startSession();
     }
@@ -306,14 +304,26 @@ void Application::initSystemTray()
 {
     m_systemTray = new SystemTray(this);
     m_systemTray->retranslateStrings();
-    m_engine.rootContext()->setContextProperty("systemTray", m_systemTray);
+    m_qmlEngine.rootContext()->setContextProperty("systemTray", m_systemTray);
     connect(m_systemTray, &SystemTray::signalQuit,
             this, &Application::quitApp);
 
     m_systemTray->show();
 }
 
-QString Application::defaultSoundNotifyFile() const
+void Application::initWebEngine()
 {
-    return m_resourcesDirPath + "/sound/notification.wav";
+#ifndef DISABLE_BROWSER
+    m_webEngine = new WebEngine(this);
+#endif
+}
+
+void Application::initQmlFileSelector()
+{
+    QQmlFileSelector *qfs = new QQmlFileSelector(&m_qmlEngine, &m_qmlEngine);
+    QStringList selectors;
+#ifndef DISABLE_BROWSER
+    selectors.append(webEngine()->getQmlSelectors());
+#endif
+    qfs->setExtraSelectors(selectors);
 }

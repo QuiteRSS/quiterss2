@@ -21,16 +21,27 @@
 #define WEBENGINE_H
 
 #include <QObject>
+#ifndef MOBILE
+#include <QQuickWebEngineProfile>
+#include "cookiejar.h"
+#endif
 
 class WebEngine : public QObject
 {
     Q_OBJECT
 public:
     explicit WebEngine(QObject *parent = 0);
+    ~WebEngine();
 
-    static void initialize();
-    static void loadSettings();
-    static QStringList getQmlSelectors();
+    void loadSettings();
+    QStringList getQmlSelectors();
+    QQuickWebEngineProfile *profile() const { return m_profile; }
+
+private:
+#ifndef MOBILE
+    QQuickWebEngineProfile *m_profile;
+    CookieJar *m_cookieJar;
+#endif
 
 };
 

@@ -28,6 +28,10 @@
 #include "common.h"
 #include "settings.h"
 #include "ganalytics.h"
+#include "networkmanager.h"
+#ifndef DISABLE_BROWSER
+#include "webengine.h"
+#endif
 
 #define mainApp Application::getInstance()
 
@@ -54,10 +58,14 @@ public:
     QString resourcesDirPath() const { return m_resourcesDirPath; }
     QString dataDirPath() const { return m_dataDirPath; }
     QString cacheDirPath() const { return m_cacheDirPath; }
+    QString defaultSoundNotifyFile() const;
     bool canWriteDebugMsgLog() const { return m_writeDebugMsgLog; }
     Q_INVOKABLE bool showSplashScreenEnabled() const { return m_showSplashScreen; }
+    NetworkManager *networkManager() const { return m_networkManager; }
     GAnalytics *analytics() const { return m_analytics; }
-    QString defaultSoundNotifyFile() const;
+#ifndef DISABLE_BROWSER
+    WebEngine *webEngine() const { return m_webEngine; }
+#endif
 
 signals:
     void setSplashScreenValue(int value);
@@ -82,6 +90,8 @@ private:
     QString getDefaultLanguage();
     void initGoogleAnalytics();
     void initSystemTray();
+    void initWebEngine();
+    void initQmlFileSelector();
 
     bool m_isPortable;
     bool m_isPortableAppsCom;
@@ -99,12 +109,17 @@ private:
     bool m_isSaveDataLastFeed;
     bool m_updateFeedsStartUp;
 
+    NetworkManager *m_networkManager;
     GAnalytics *m_analytics;
-    QQmlApplicationEngine m_engine;
+    QQmlApplicationEngine m_qmlEngine;
     SystemTray *m_systemTray;
     QTranslator *m_qtTranslator;
     QTranslator *m_appTranslator;
     QString m_language;
+#ifndef DISABLE_BROWSER
+    WebEngine *m_webEngine;
+#endif
+
 
 };
 

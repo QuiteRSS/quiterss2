@@ -18,3 +18,18 @@
 **
 ****************************************************************************/
 #include "common.h"
+
+bool Common::matchDomain(const QString &pattern, const QString &domain)
+{
+    if (pattern == domain) {
+        return true;
+    }
+
+    if (!domain.endsWith(pattern)) {
+        return false;
+    }
+
+    int index = domain.indexOf(pattern);
+
+    return index > 0 && domain[index - 1] == QLatin1Char('.');
+}
