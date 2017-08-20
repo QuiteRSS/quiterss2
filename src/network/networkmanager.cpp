@@ -26,7 +26,7 @@
 NetworkManager::NetworkManager(QObject *parent) :
     QNetworkAccessManager(parent)
 {
-
+    loadSettings();
 }
 
 void NetworkManager::loadSettings()
