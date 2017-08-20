@@ -52,11 +52,6 @@ Application::Application(int &argc, char **argv) :
         }
         setClosing();
         return;
-    } else {
-        if (message.contains("--exit", Qt::CaseInsensitive)) {
-            setClosing();
-            return;
-        }
     }
 
     setApplicationName("QuiteRSS");
@@ -156,7 +151,7 @@ void Application::receiveMessage(const QString &message)
                 emit showMainWindow();
             }
             if (param == "--exit")
-                emit closeMainWindow();
+                quitApp();
             if (param.contains("feed:", Qt::CaseInsensitive)) {
                 QClipboard *clipboard = QApplication::clipboard();
                 if (param.contains("https://", Qt::CaseInsensitive)) {
@@ -217,6 +212,11 @@ void Application::initDirPaths()
     m_dirPathInitialized = true;
 }
 
+QString Application::defaultSoundNotifyFile() const
+{
+    return m_resourcesDirPath + "/sound/notification.wav";
+}
+
 void Application::initSettings()
 {
     QString fileName;
@@ -228,14 +228,13 @@ void Application::initSettings()
     settings.beginGroup("General-Settings");
     m_showSplashScreen = settings.value("ShowSplashScreen", true).toBool();
     m_writeDebugMsgLog = settings.value("WriteDebugMsgLog", false).toBool();
-
     settings.endGroup();
 }
 
 void Application::loadTranslation()
 {
     Settings settings;
-    m_language = settings.value("General-Settings/language", getDefaultLanguage()).toString();
+    m_language = settings.value("General-Settings/Language", getDefaultLanguage()).toString();
 
     if (!m_appTranslator)
         m_appTranslator = new QTranslator(this);
@@ -286,7 +285,7 @@ QString Application::getDefaultLanguage()
 void Application::initGoogleAnalytics()
 {
     Settings settings;
-    bool statisticsEnabled = settings.value("General-Settings/statisticsEnabled", true).toBool();
+    bool statisticsEnabled = settings.value("General-Settings/StatisticsEnabled", true).toBool();
     if (statisticsEnabled) {
         QString clientID;
         if (!settings.contains("GAnalytics-cid")) {
