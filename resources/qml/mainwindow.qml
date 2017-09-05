@@ -24,32 +24,30 @@ import QtQuick.Window 2.3
 ApplicationWindow {
     id: mainWindow
 
-    property var splashScreen: SplashScreen {
-        id: splashScreen
+    property var splashScreen: SplashScreen { }
+    property Component closingWindow: ClosingWindow { }
+    property Component authenticationDialog: AuthenticationDialog { }
+
+    function createAuthenticationDialog(server) {
+        authenticationDialog.createObject(mainWindow, {"server":server});
     }
 
     title: "QuiteRSS"
     height: 750
     width: 1024
 
-    ClosingWindow {
-        id: closingWindow
-    }
     WebView {
         anchors.fill: parent
     }
-
     Component.onCompleted: {
         analytics.sendScreenview("mainWindow")
     }
-
     onClosing: {
         mainApp.quitApp()
     }
 
     Connections {
         target: systemTray
-
         onSignalShowWindow: {
             mainWindow.show()
             mainWindow.raise()
@@ -62,11 +60,16 @@ ApplicationWindow {
         }
     }
     Connections {
+        target: networkManager
+        onShowAuthenticationDialog: {
+            createAuthenticationDialog(server)
+        }
+    }
+    Connections {
         target: mainApp
-
         onShowMainWindow: {
             mainWindow.visible = true
-            splashScreen.visible = false
+            splashScreen.close()
         }
         onCloseMainWindow: {
             close()
@@ -75,7 +78,7 @@ ApplicationWindow {
             splashScreen.setValue(value)
         }
         onShowClosingWindow: {
-            closingWindow.show()
+            closingWindow.createObject(mainWindow)
             hide()
             systemTray.hide()
         }

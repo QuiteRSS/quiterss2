@@ -38,12 +38,12 @@ Window {
     width: splashImage.width
     height: splashImage.height
     visible: mainApp.showSplashScreenEnabled();
+    onClosing: destroy()
 
     Image {
         id: splashImage
         source: "qrc:/images/splash-screen.png"
     }
-
     ColumnLayout {
         id: layout
         anchors.fill: parent
