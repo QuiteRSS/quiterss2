@@ -35,7 +35,9 @@ public:
 
     void loadSettings();
     QStringList getQmlSelectors();
+#ifndef MOBILE
     QQuickWebEngineProfile *profile() const { return m_profile; }
+#endif
 
 private:
 #ifndef MOBILE
