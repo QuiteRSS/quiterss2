@@ -21,19 +21,22 @@
 #define NETWORKMANAGER_H
 
 #include <QNetworkAccessManager>
+#include <QAuthenticator>
 
 class NetworkManager : public QNetworkAccessManager
 {
     Q_OBJECT
 public:
-    explicit NetworkManager(QObject *parent = Q_NULLPTR);
-
-    void proxyAuthentication(const QString &proxyHost, QAuthenticator *auth, QWidget *parent = Q_NULLPTR);
+    explicit NetworkManager(QObject *parent = 0);
 
     void loadSettings();
 
+signals:
+    void showAuthenticationDialog(const QString &server/*, QAuthenticator *auth*/);
+
 protected:
-    QNetworkReply *createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData) Q_DECL_OVERRIDE;
+    QNetworkReply *createRequest(Operation op, const QNetworkRequest &request,
+                                 QIODevice *outgoingData) Q_DECL_OVERRIDE;
 
 private:
 

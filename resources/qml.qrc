@@ -7,5 +7,6 @@
         <file>qml/SystemTrayIcon.qml</file>
         <file>qml/SplashScreen.qml</file>
         <file>qml/ClosingWindow.qml</file>
+        <file>qml/AuthenticationDialog.qml</file>
     </qresource>
 </RCC>

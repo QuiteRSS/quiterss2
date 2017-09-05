@@ -61,6 +61,7 @@ public:
     QString defaultSoundNotifyFile() const;
     bool canWriteDebugMsgLog() const { return m_writeDebugMsgLog; }
     Q_INVOKABLE bool showSplashScreenEnabled() const { return m_showSplashScreen; }
+    QQmlApplicationEngine *qmlEngine() { return &m_qmlEngine; }
     NetworkManager *networkManager() const { return m_networkManager; }
     GAnalytics *analytics() const { return m_analytics; }
 #ifndef DISABLE_BROWSER

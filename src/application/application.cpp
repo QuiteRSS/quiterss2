@@ -71,6 +71,7 @@ Application::Application(int &argc, char **argv) :
     qWarning() << "Run application";
 
     m_networkManager = new NetworkManager(this);
+    m_qmlEngine.rootContext()->setContextProperty("networkManager", m_networkManager);
 
     loadTranslation();
     initGoogleAnalytics();
@@ -92,6 +93,12 @@ Application::Application(int &argc, char **argv) :
     connect(this, &Application::messageReceived, this, &Application::receiveMessage);
     connect(this, &Application::commitDataRequest, this, &Application::commitData);
     connect(this, &Application::saveStateRequest, this, &Application::saveState);
+
+//    QUrl collect_url("https://mail.google.com/mail/u/0/feed/atom");
+//    QNetworkRequest request;
+//    QNetworkReply *reply;
+//    request.setUrl(collect_url);
+//    reply = m_networkManager->get(request);
 }
 
 Application::~Application()

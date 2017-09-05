@@ -89,13 +89,19 @@ INCLUDEPATH += \
     $$PWD/src/network \
 
 isEmpty(DISABLE_BROWSER) {
+    isEmpty(MOBILE) {
     HEADERS += \
-        src/webengine/webengine.h \
         src/webengine/cookiejar.h \
 
     SOURCES += \
-        src/webengine/webengine.cpp \
         src/webengine/cookiejar.cpp \
+    }
+
+    HEADERS += \
+        src/webengine/webengine.h \
+
+    SOURCES += \
+        src/webengine/webengine.cpp \
 
     INCLUDEPATH += \
         $$PWD/src/webengine \

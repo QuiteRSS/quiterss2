@@ -22,11 +22,31 @@
 
 #include <QNetworkReply>
 #include <QNetworkProxy>
+#include <QQmlComponent>
 
 NetworkManager::NetworkManager(QObject *parent) :
     QNetworkAccessManager(parent)
 {
     loadSettings();
+
+    connect(this, &QNetworkAccessManager::authenticationRequired,
+            this, [this](QNetworkReply *reply, QAuthenticator *auth) {
+        Q_UNUSED(auth)
+//        QQmlComponent comp(mainApp->qmlEngine(), QUrl("qrc:/qml/AuthenticationDialog.qml"),
+//                           QQmlComponent::PreferSynchronous);
+//        if(comp.isReady()) {
+//            QObject *object = comp.create();
+//            object->setProperty("server", reply->url().host());
+//            object->deleteLater();
+//        }
+        emit showAuthenticationDialog(reply->url().host());
+    });
+
+    connect(this, &QNetworkAccessManager::proxyAuthenticationRequired,
+            this, [this](const QNetworkProxy &proxy, QAuthenticator *auth) {
+        Q_UNUSED(auth)
+        emit showAuthenticationDialog(proxy.hostName()/*, auth*/);
+    });
 }
 
 void NetworkManager::loadSettings()
