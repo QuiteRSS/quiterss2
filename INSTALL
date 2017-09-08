@@ -18,8 +18,7 @@ Build Steps:
   mkdir build && cd build
   qmake CONFIG+=release -spec win32-msvc ..\quiterss2.pro
   jom -j3
-  rm -r -f ..\resources\qml\+mobile
-  windeployqt bin\QuiteRSS.exe --qmldir=..\resources\qml --no-compiler-runtime
+  windeployqt bin --qmldir=..\resources\qml\+webview --no-compiler-runtime
 
 Instead of -j3 make option you can use -j<number of your CPU cores + 1>
 
