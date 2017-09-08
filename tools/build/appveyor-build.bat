@@ -5,8 +5,7 @@ echo "BUILD %APPVEYOR_BUILD_VERSION%_%CONFIGURATION%_%ARCH%_%APPVEYOR_REPO_TAG_N
 mkdir build && cd build
 qmake CONFIG+=%CONFIGURATION% ..\quiterss2.pro
 call jom
-rm -r -f ..\resources\qml\+mobile
-windeployqt bin\quiterss.exe --qmldir=..\resources\qml --no-compiler-runtime
+windeployqt bin --qmldir=..\resources\qml\+webview --no-compiler-runtime
 cp c:\Windows\SysWOW64\msvcp140.dll bin
 cp c:\Windows\SysWOW64\vccorlib140.dll bin
 cp c:\Windows\SysWOW64\vcruntime140.dll bin
