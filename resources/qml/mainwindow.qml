@@ -19,7 +19,7 @@
 ****************************************************************************/
 import QtQuick 2.8
 import QtQuick.Controls 1.4
-import QtQuick.Window 2.3
+import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: mainWindow
@@ -36,9 +36,28 @@ ApplicationWindow {
     height: 750
     width: 1024
 
-    WebView {
+    ColumnLayout {
         anchors.fill: parent
+        spacing: 0
+
+        Rectangle {
+            color: "#76d080"
+            Layout.fillWidth: true
+            Layout.preferredHeight: 0
+        }
+
+        TabViewApp {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
+
+        Rectangle {
+            color: "#e1e1e1"
+            Layout.fillWidth: true
+            Layout.preferredHeight: 20
+        }
     }
+
     Component.onCompleted: {
         analytics.sendScreenview("mainWindow")
     }

@@ -8,5 +8,7 @@
         <file>qml/SplashScreen.qml</file>
         <file>qml/ClosingWindow.qml</file>
         <file>qml/AuthenticationDialog.qml</file>
+        <file>qml/TabViewApp.qml</file>
+        <file>qml/IconTab.qml</file>
     </qresource>
 </RCC>
