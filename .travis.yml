@@ -39,7 +39,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       sudo apt-get -qq update;
       sudo apt-get -qq install libssl-dev pkg-config libxcb-util0-dev;
-      sudo apt-add-repository -y ppa:beineri/opt-qt59-trusty;
+      sudo apt-add-repository -y ppa:beineri/opt-qt593-trusty;
       sudo apt-get update -qq;
       sudo apt-get install -qq qt59tools qt59base qt59webengine qt59webchannel;
     fi
