@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** QuiteRSS is a open-source cross-platform news feed reader
-** Copyright (C) 2011-2017 QuiteRSS Team <quiterssteam@gmail.com>
+** Copyright (C) 2011-2018 QuiteRSS Team <quiterssteam@gmail.com>
 **
 ** This program is free software: you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ Window {
                 var copyrightStr =
                         "<div align=\"right\">" +
                         "http://quiterss.org" +
-                        "<BR>Copyright &copy; 2011-2017 QuiteRSS Team" +
+                        "<BR>Copyright &copy; 2011-2018 QuiteRSS Team" +
                         "</div>"
                 this.text = copyrightStr
             }

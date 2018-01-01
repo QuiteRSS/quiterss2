@@ -28,4 +28,4 @@ License
 --------------------------------------------------------------------------------
 [GNU General Public License v3.0](https://github.com/QuiteRSS/quiterss2/blob/master/LICENSE)
 
-Copyright (C) 2011-2017 QuiteRSS Team <quiterssteam@gmail.com>
+Copyright (C) 2011-2018 QuiteRSS Team <quiterssteam@gmail.com>
