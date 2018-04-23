@@ -3,5 +3,7 @@
         <file>images/tray-icon.png</file>
         <file>images/splash-screen.png</file>
         <file>images/quiterss.png</file>
+        <file>images/updateAllFeeds.png</file>
+        <file>images/feed-icon.png</file>
     </qresource>
 </RCC>
