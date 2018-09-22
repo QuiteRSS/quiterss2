@@ -7,7 +7,7 @@ isEqual(QT_MAJOR_VERSION, 5):lessThan(QT_MINOR_VERSION, 9) {
 
 APP_REVISION = 0
 exists(.git) {
-    APP_REVISION = $$system(git rev-list --count head)
+    APP_REVISION = $$system(git rev-list --count HEAD)
     !count(APP_REVISION, 1):APP_REVISION = 0
 }
 !build_pass:message(quiterss: VCS revision $$APP_REVISION)
