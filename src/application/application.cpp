@@ -61,9 +61,6 @@ Application::Application(int &argc, char **argv) :
     setWindowIcon(QIcon(":/images/quiterss.png"));
     setQuitOnLastWindowClosed(false);
 
-    setAttribute(Qt::AA_UseHighDpiPixmaps);
-    setAttribute(Qt::AA_EnableHighDpiScaling);
-
     checkPortable();
     initDirPaths();
     initSettings();
