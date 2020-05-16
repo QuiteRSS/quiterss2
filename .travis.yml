@@ -62,6 +62,7 @@ script:
       MACDEPLOYQT=$QTDIR/bin/macdeployqt;
     fi
   - mkdir build && cd build
+  - ls /usr/local/opt/
   - $QMAKE -r ..
   - make -j3 CC=$CC CXX=$CXX
   - cd ./bin
