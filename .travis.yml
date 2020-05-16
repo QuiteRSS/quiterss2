@@ -50,7 +50,7 @@ install:
       echo "Using Homebrew Qt...";
       brew install qt5;
       export QTDIR=/usr/local/opt/qt5;
-      ls /usr/local/opt/
+      ls /usr/local/opt/;
     fi
 
 script:
