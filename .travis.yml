@@ -16,13 +16,13 @@ matrix:
         - BUILD_ENV=linux_clang
         
     - os: osx
-      osx_image: xcode9.2
+      osx_image: xcode9.3
       compiler:
         - gcc
       env:
         - BUILD_ENV=osx_gcc
     - os: osx
-      osx_image: xcode9.2
+      osx_image: xcode9.3
       compiler:
         - clang
       env:
@@ -44,8 +44,8 @@ install:
       sudo apt-get install -qq qt59tools qt59base qt59webengine qt59webchannel;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      echo "Calling brew update...";
-      brew update;
+      #echo "Calling brew update...";
+      #brew update;
       brew outdated openssl || brew upgrade openssl;
       echo "Using Homebrew Qt...";
       brew install qt5;
