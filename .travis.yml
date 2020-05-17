@@ -44,8 +44,7 @@ install:
       sudo apt-get install -qq qt59tools qt59base qt59webengine qt59webchannel;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      #echo "Calling brew update...";
-      #brew update;
+      echo "Calling brew update...";
       brew outdated openssl || brew upgrade openssl;
       echo "Using Homebrew Qt...";
       brew install qt5;
